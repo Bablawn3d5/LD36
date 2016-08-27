@@ -1,4 +1,5 @@
 import entityx
+from mouse import MouseFollower
 from _entityx_components import Renderable, Body, Physics
 from gamemath import vector2
 
@@ -30,6 +31,16 @@ class ButtonController(entityx.Entity):
         self.center = Vector2(self.body.position.x + self.physics.size.x/2,
             self.body.position.y + self.physics.size.y/2)
         self.init = False
+        
+        rend = self.Component(Renderable)
+        rend.font = "./fonts/arial.ttf"
+        rend.fontString = "Score: " + str(12)
+        rend.r = 78
+        rend.g = 190
+        rend.b = 78
+        rend.a = 190
+        
+        self.mouse = MouseFollower()
 
     def update(self, dt):
         if (self.init == False):
