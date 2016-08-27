@@ -1,0 +1,21 @@
+{
+    "body" : {
+        "position" : [ 440, 140 ]
+    },
+    "stats" : {
+        "speed" : 100.0
+    },
+    "physics" : {
+        "bodyType" : "STATIC",
+        "size" : [ 80, 60 ],
+        "category" : "CATEGORY_1",
+        "mask" : "0000000000000000"
+    },
+    "renderable" : {
+        "texture" : "./images/Light.png"
+    },
+    "pythons" : {
+        "modulename" : "action.fire",
+        "class" : "Flicker"
+    }
+}

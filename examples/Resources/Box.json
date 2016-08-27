@@ -1,14 +1,17 @@
 {
     "body" : {
-        "position" : [ 240, 240 ]
+        "position" : [ 480, 180 ]
     },
     "stats" : {
         "speed" : 100.0
     },
     "physics" : {
         "bodyType" : "STATIC",
-        "size" : [ 50, 50 ],
+        "size" : [ 80, 60 ],
         "category" : "CATEGORY_16",
         "mask" : "1000000000000000"
+    },
+    "renderable" : {
+        "texture" : "./images/FlameOn.png"
     }
 }
