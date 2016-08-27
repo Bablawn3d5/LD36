@@ -1,5 +1,5 @@
 import entityx
-from _entityx_components import CollisionCategory, Body, InputResponder, Physics, Stats, b2BodyType
+from _entityx_components import CollisionCategory, Body, Renderable, InputResponder, Physics, Stats, b2BodyType
 from follower import Follower
 from gamemath import vector2
 
@@ -64,3 +64,11 @@ class Shooter(entityx.Entity):
         stats = e.Component(Stats)
         stats.speed = min( 600, ( (self.max_size ) * 30) - (self.box_size * 15))
         e.explode.can_explode = True
+        rend = e.Component(Renderable)
+        rend.font = "./fonts/arial.ttf"
+        rend.fontString = "+1"
+        rend.r = 78
+        rend.g = 190
+        rend.b = 78
+        rend.a = 190
+

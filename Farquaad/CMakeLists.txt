@@ -93,12 +93,13 @@ if(NOT BUILD_SHARED_LIBS)
 endif()
 add_library(Farquaad STATIC ${SOURCES} ${INCLUDES} ${IMGUI_AMALGAMATE_SOURCES})
 
+# Disable tests for LD36. We doing it live.
 # Add tests
-add_subdirectory(${PROJECT_SOURCE_DIR}/tests)
-enable_testing()
-add_test(NAME all_tests
-         WORKING_DIRECTORY ${CMAKE_PROJECT_BINARY_DIR}
-         COMMAND all_tests )
+# add_subdirectory(${PROJECT_SOURCE_DIR}/tests)
+# enable_testing()
+# add_test(NAME all_tests
+#          WORKING_DIRECTORY ${CMAKE_PROJECT_BINARY_DIR}
+#          COMMAND all_tests )
 
 # Include SFML
 include_directories(${SFML_SOURCE_DIR}/include)

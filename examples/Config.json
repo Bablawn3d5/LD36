@@ -1,5 +1,5 @@
 {
-  "app_title" : "This is example. Yay.",
+  "app_title" : "LD36 - Ancient Technology",
   "clear_color" : [95,195,215],
   "keys" : {
     "MoveUp" : "KEY_W",
@@ -14,6 +14,7 @@
     "Spawn" : "MOUSE_Left"
   },
   "entities" : [
+    "./Resources/BG.json",
     "./Resources/Hero.json",
     "./Resources/Mouse.json",
     "./Resources/Box.json"

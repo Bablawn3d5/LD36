@@ -1,0 +1,8 @@
+{
+    "body" : {
+        "position" : [ 0, 0 ]
+    },
+    "renderable" : {
+        "texture" : "./images/Background.png"
+    }
+}

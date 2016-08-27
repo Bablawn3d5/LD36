@@ -126,7 +126,16 @@ template <>
 inline auto registerMembers<Renderable>() {
   return members(
     member("texture", &Renderable::texture_name),
-    member("sprite", &Renderable::sprite_name)
+    member("sprite", &Renderable::sprite_name),
+    member("r", &Renderable::r),
+    member("g", &Renderable::g),
+    member("b", &Renderable::b),
+    member("a", &Renderable::a),
+    member("scale", &Renderable::scale),
+    member("font", &Renderable::font_name),
+    member("fontString", &Renderable::font_string),
+    member("fontSize", &Renderable::font_size),
+    member("dirty", &Renderable::isDitry)
   );
 }
 } // namespace meta

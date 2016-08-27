@@ -40,10 +40,13 @@ file(GLOB ExampleResources
     ${SCRIPTDIR}/gamemath/vector2.py
     ${SCRIPTDIR}/gamemath/util.py
     ${FarquaadExamples_SOURCE_DIR}/Config.json
+    ${FarquaadExamples_SOURCE_DIR}/Resources/BG.json
     ${FarquaadExamples_SOURCE_DIR}/Resources/Box.json
     ${FarquaadExamples_SOURCE_DIR}/Resources/Hero.json
     ${FarquaadExamples_SOURCE_DIR}/Resources/Mouse.json
+    ${FarquaadExamples_SOURCE_DIR}/fonts/arial.ttf
     ${FarquaadExamples_SOURCE_DIR}/images/perfectface.png
+    ${FarquaadExamples_SOURCE_DIR}/images/background.png
     ${FarquaadExamples_SOURCE_DIR}/sounds/Explode.wav
     ${PYTHON27_STD_ZIP})
 
