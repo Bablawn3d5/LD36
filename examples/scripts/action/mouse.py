@@ -63,7 +63,6 @@ class MouseFollower(Follower):
         if (self.current_cooldown <= 0):
             if(self.is_clicking):
                 # Reset cooldown
-                print "You clicked!"
                 self.current_cooldown = self.click_cooldown
         else:
             self.current_cooldown -= dt;

@@ -14,16 +14,33 @@ class Button(entityx.Entity):
         self.physics = self.Component(Physics)
         self.physics.size.x = TILESIZE_X*3
         self.physics.size.y = TILESIZE_Y*1
+        self.physics.category = CollisionCategory.CATEGORY_16
+        self.physics.mask.bits = CollisionCategory.CATEGORY_16
         self.rend = self.Component(Renderable)
         self.rend.texture = "./images/button.png"
         self.center = Vector2(self.body.position.x + self.physics.size.x/2,
             self.body.position.y + self.physics.size.y/2)
         self.updated = False
+        
+        self.button_text = ButtonText()
+        
+        self.click_count = 0
 
     def update(self, dt):
         # Do nothing.
         self.updated = True
 
+class ButtonText(entityx.Entity):
+    def __init__(self):
+        self.body = self.Component(Body)
+        self.rend = self.Component(Renderable)
+        self.base_text = ""
+        self.updated = False
+
+    def update(self, dt):
+        # Do nothing.
+        self.updated = True
+        
 class ButtonController(entityx.Entity):
     def __init__(self):
         self.body = self.Component(Body)
@@ -45,14 +62,14 @@ class ButtonController(entityx.Entity):
 
     def update(self, dt):
         if (self.init == False):
-            self.button1 = self.createButton(TILESIZE_X*0,TILESIZE_Y*2)
-            self.button2 = self.createButton(TILESIZE_X*0,TILESIZE_Y*3)
-            self.button3 = self.createButton(TILESIZE_X*0,TILESIZE_Y*4)
-            self.button4 = self.createButton(TILESIZE_X*0,TILESIZE_Y*5)
-            self.button5 = self.createButton(TILESIZE_X*0,TILESIZE_Y*6)
-            self.button6 = self.createButton(TILESIZE_X*0,TILESIZE_Y*7)
-            self.button7 = self.createButton(TILESIZE_X*0,TILESIZE_Y*8)
-            self.button8 = self.createButton(TILESIZE_X*0,TILESIZE_Y*9)
+            self.button1 = self.createButton(TILESIZE_X*0,TILESIZE_Y*2, "Sticks")
+            self.button2 = self.createButton(TILESIZE_X*0,TILESIZE_Y*3, "Trees")
+            self.button3 = self.createButton(TILESIZE_X*0,TILESIZE_Y*4, "People")
+            self.button4 = self.createButton(TILESIZE_X*0,TILESIZE_Y*5, "Buildings")
+            self.button5 = self.createButton(TILESIZE_X*0,TILESIZE_Y*6, "Cities")
+            self.button6 = self.createButton(TILESIZE_X*0,TILESIZE_Y*7, "Continent")
+            self.button7 = self.createButton(TILESIZE_X*0,TILESIZE_Y*8, "Planets")
+            self.button8 = self.createButton(TILESIZE_X*0,TILESIZE_Y*9, "Galaxies")
             
             self.box = entityx.Entity()
             newBody = self.box.Component(Body)
@@ -74,10 +91,54 @@ class ButtonController(entityx.Entity):
             self.current_score = self.current_score + 1
             self.rend.fontString = "Score: " + str(self.current_score)
             self.rend.dirty = True
+        elif (self.button1 in self.mouse.physics.currentCollisions and self.mouse.is_clicking == True):
+            self.button1.click_count = self.button1.click_count + 1
+            self.button1.button_text.rend.fontString = self.button1.button_text.rend.base_text + ": " + str(self.button1.click_count)
+            self.button1.rend.dirty = True
+        elif (self.button2 in self.mouse.physics.currentCollisions and self.mouse.is_clicking == True):
+            self.button2.click_count = self.button2.click_count + 1
+            self.button2.button_text.rend.fontString = self.button2.button_text.rend.base_text + ": " + str(self.button2.click_count)
+            self.button2.rend.dirty = True
+        elif (self.button3 in self.mouse.physics.currentCollisions and self.mouse.is_clicking == True):
+            self.button3.click_count = self.button3.click_count + 1
+            self.button3.button_text.rend.fontString = self.button3.button_text.rend.base_text + ": " + str(self.button3.click_count)
+            self.button3.rend.dirty = True
+        elif (self.button4 in self.mouse.physics.currentCollisions and self.mouse.is_clicking == True):
+            self.button4.click_count = self.button4.click_count + 1
+            self.button4.button_text.rend.fontString = self.button4.button_text.rend.base_text + ": " + str(self.button4.click_count)
+            self.button4.rend.dirty = True
+        elif (self.button5 in self.mouse.physics.currentCollisions and self.mouse.is_clicking == True):
+            self.button5.click_count = self.button5.click_count + 1
+            self.button5.button_text.rend.fontString = self.button5.button_text.rend.base_text + ": " + str(self.button5.click_count)
+            self.button5.rend.dirty = True
+        elif (self.button6 in self.mouse.physics.currentCollisions and self.mouse.is_clicking == True):
+            self.button6.click_count = self.button6.click_count + 1
+            self.button6.button_text.rend.fontString = self.button6.button_text.rend.base_text + ": " + str(self.button6.click_count)
+            self.button6.rend.dirty = True
+        elif (self.button7 in self.mouse.physics.currentCollisions and self.mouse.is_clicking == True):
+            self.button7.click_count = self.button7.click_count + 1
+            self.button7.button_text.rend.fontString = self.button7.button_text.rend.base_text + ": " + str(self.button7.click_count)
+            self.button7.rend.dirty = True
+        elif (self.button8 in self.mouse.physics.currentCollisions and self.mouse.is_clicking == True):
+            self.button8.click_count = self.button8.click_count + 1
+            self.button8.button_text.rend.fontString = self.button8.button_text.rend.base_text + ": " + str(self.button8.click_count)
+            self.button8.rend.dirty = True
 
-    def createButton(self, x, y):
+    def createButton(self, x, y, text):
         e = Button()
         e.body.position.x = x
         e.body.position.y = y
+        
+        e.button_text.body.position.x = x + 10
+        e.button_text.body.position.y = y
+        
+        e.button_text.rend.font = "./fonts/arial.ttf"
+        e.button_text.rend.base_text = str(text)
+        e.button_text.rend.fontString = str(text) + ": 0"
+        e.button_text.rend.r = 78
+        e.button_text.rend.g = 190
+        e.button_text.rend.b = 78
+        e.button_text.rend.a = 190
+        
         return e
-
+        
