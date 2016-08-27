@@ -1,6 +1,6 @@
 import entityx
 from mouse import MouseFollower
-from _entityx_components import Renderable, Body, Physics
+from _entityx_components import Renderable, Body, Physics, Stats, b2BodyType, CollisionCategory
 from gamemath import vector2
 
 Vector2 = vector2.Vector2
@@ -31,14 +31,15 @@ class ButtonController(entityx.Entity):
         self.center = Vector2(self.body.position.x + self.physics.size.x/2,
             self.body.position.y + self.physics.size.y/2)
         self.init = False
+        self.current_score = 0
         
-        rend = self.Component(Renderable)
-        rend.font = "./fonts/arial.ttf"
-        rend.fontString = "Score: " + str(12)
-        rend.r = 78
-        rend.g = 190
-        rend.b = 78
-        rend.a = 190
+        self.rend = self.Component(Renderable)
+        self.rend.font = "./fonts/arial.ttf"
+        self.rend.fontString = "Score: 0"
+        self.rend.r = 78
+        self.rend.g = 190
+        self.rend.b = 78
+        self.rend.a = 190
         
         self.mouse = MouseFollower()
 
@@ -52,7 +53,27 @@ class ButtonController(entityx.Entity):
             self.button6 = self.createButton(TILESIZE_X*0,TILESIZE_Y*7)
             self.button7 = self.createButton(TILESIZE_X*0,TILESIZE_Y*8)
             self.button8 = self.createButton(TILESIZE_X*0,TILESIZE_Y*9)
+            
+            self.box = entityx.Entity()
+            newBody = self.box.Component(Body)
+            newBody.position.x = 480
+            newBody.position.y = 180
+            self.box.Component(Stats)
+            newPhysics = self.box.Component(Physics)
+            newPhysics.bodyType = b2BodyType.STATIC
+            newPhysics.size.x = 80
+            newPhysics.size.y = 60
+            newPhysics.category = CollisionCategory.CATEGORY_16
+            newPhysics.mask.bits = CollisionCategory.CATEGORY_16
+            newRenderable = self.box.Component(Renderable)
+            newRenderable.texture = "./images/FlameOn.png"
+            
             self.init = True
+            
+        if (self.box in self.mouse.physics.currentCollisions and self.mouse.is_clicking == True):
+            self.current_score = self.current_score + 1
+            self.rend.fontString = "Score: " + str(self.current_score)
+            self.rend.dirty = True
 
     def createButton(self, x, y):
         e = Button()

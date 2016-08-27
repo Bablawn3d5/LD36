@@ -28,9 +28,9 @@ class MouseFollower(Follower):
         self.current_cooldown = 0
 
     def update(self, dt):
+        self.is_clicking = False
+    
         mousePos = Vector2(self.inresponder.mousePos)
-        #mousePos.copy_to(self.body.position)
-        #self.physics.dirty = True
         
         cur_pos = Vector2(self.body.position)
         dest_pos = mousePos
@@ -45,9 +45,9 @@ class MouseFollower(Follower):
         
         input_events = self.inresponder.responds
         if "+Spawn" in input_events and self.physics.collisionCount > 0:
-            self.is_clicking = True
-        if "-Spawn" in input_events:
             self.is_clicking = False
+        if "-Spawn" in input_events:
+            self.is_clicking = True
 
         if (self.current_cooldown <= 0):
             if(self.is_clicking):
