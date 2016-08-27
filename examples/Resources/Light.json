@@ -1,6 +1,6 @@
 {
     "body" : {
-        "position" : [ 480, 180 ]
+        "position" : [ 440, 140 ]
     },
     "stats" : {
         "speed" : 100.0
@@ -9,9 +9,13 @@
         "bodyType" : "STATIC",
         "size" : [ 80, 60 ],
         "category" : "CATEGORY_1",
-        "mask" : "0000000000000111"
+        "mask" : "0000000000000000"
     },
     "renderable" : {
-        "texture" : "./images/FlameOn.png"
+        "texture" : "./images/Light.png"
+    },
+    "pythons" : {
+        "modulename" : "action.fire",
+        "class" : "Flicker"
     }
 }
