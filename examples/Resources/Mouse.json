@@ -9,7 +9,9 @@
         "bodyType" : "DYNAMIC",
         "size" : [ 10, 10 ],
         "category" : "CATEGORY_16",
-        "mask" : "0000000000000000"
+        "mask" : "1000000000000000",
+        "isSensor" : true,
+        "isBullet" : true
     },
     "inputresponder" : {},
     "pythons" : {
