@@ -28,9 +28,10 @@ class Button(entityx.Entity):
         self.click_count = 0
 
     def enable(self):
-        self.enabled = True
-        self.button_text.rend.fontString = self.button_text.rend.base_text + ": 0"
-        self.button_text.rend.dirty = True;
+        if self.enabled == False:
+            self.enabled = True
+            self.button_text.rend.fontString = self.button_text.rend.base_text + ": 0"
+            self.button_text.rend.dirty = True;
         
     def update(self, dt):
         # Do nothing.
@@ -105,61 +106,38 @@ class ButtonController(entityx.Entity):
             self.current_score = self.current_score + 1
             self.rend.fontString = "Score: " + str(self.current_score)
             self.rend.dirty = True
-            
-        elif (self.button1.enabled == True and self.button1 in self.mouse.physics.currentCollisions and self.mouse.is_clicking == True):
-            self.button1.click_count = self.button1.click_count + 1
-            self.button1.button_text.rend.fontString = self.button1.button_text.rend.base_text + ": " + str(self.button1.click_count)
-            self.button1.rend.dirty = True
-            if (self.button1.click_count > self.STICK_COUNT):
+        
+        self.process_button(self.button1)
+        self.process_button(self.button2)
+        self.process_button(self.button3)
+        self.process_button(self.button4)
+        self.process_button(self.button5)
+        self.process_button(self.button6)
+        self.process_button(self.button7)
+        self.process_button(self.button8)
+        
+        if (self.button1.click_count > self.STICK_COUNT):
                 self.button2.enable()
-                
-        elif (self.button2.enabled == True and self.button2 in self.mouse.physics.currentCollisions and self.mouse.is_clicking == True):
-            self.button2.click_count = self.button2.click_count + 1
-            self.button2.button_text.rend.fontString = self.button2.button_text.rend.base_text + ": " + str(self.button2.click_count)
-            self.button2.rend.dirty = True
-            if (self.button2.click_count > self.TREE_COUNT):
+        if (self.button2.click_count > self.TREE_COUNT):
                 self.button3.enable()
-            
-        elif (self.button3.enabled == True and self.button3.enabled == True and self.button3 in self.mouse.physics.currentCollisions and self.mouse.is_clicking == True):
-            self.button3.click_count = self.button3.click_count + 1
-            self.button3.button_text.rend.fontString = self.button3.button_text.rend.base_text + ": " + str(self.button3.click_count)
-            self.button3.rend.dirty = True
-            if (self.button3.click_count > self.PEOPLE_COUNT):
+        if (self.button3.click_count > self.PEOPLE_COUNT):
                 self.button4.enable()
-            
-        elif (self.button4.enabled == True and self.button4 in self.mouse.physics.currentCollisions and self.mouse.is_clicking == True):
-            self.button4.click_count = self.button4.click_count + 1
-            self.button4.button_text.rend.fontString = self.button4.button_text.rend.base_text + ": " + str(self.button4.click_count)
-            self.button4.rend.dirty = True
-            if (self.button4.click_count > self.BUILDING_COUNT):
+        if (self.button4.click_count > self.BUILDING_COUNT):
                 self.button5.enable()
-            
-        elif (self.button5.enabled == True and self.button5 in self.mouse.physics.currentCollisions and self.mouse.is_clicking == True):
-            self.button5.click_count = self.button5.click_count + 1
-            self.button5.button_text.rend.fontString = self.button5.button_text.rend.base_text + ": " + str(self.button5.click_count)
-            self.button5.rend.dirty = True
-            if (self.button5.click_count > self.CITY_COUNT):
+        if (self.button5.click_count > self.CITY_COUNT):
                 self.button6.enable()
-            
-        elif (self.button6.enabled == True and self.button6 in self.mouse.physics.currentCollisions and self.mouse.is_clicking == True):
-            self.button6.click_count = self.button6.click_count + 1
-            self.button6.button_text.rend.fontString = self.button6.button_text.rend.base_text + ": " + str(self.button6.click_count)
-            self.button6.rend.dirty = True
-            if (self.button6.click_count > self.CONTINENT_COUNT):
-                self.button7.enable()
-            
-        elif (self.button7.enabled == True and self.button7 in self.mouse.physics.currentCollisions and self.mouse.is_clicking == True):
-            self.button7.click_count = self.button7.click_count + 1
-            self.button7.button_text.rend.fontString = self.button7.button_text.rend.base_text + ": " + str(self.button7.click_count)
-            self.button7.rend.dirty = True
-            if (self.button7.click_count > self.PLANET_COUNT):
+        if (self.button6.click_count > self.CONTINENT_COUNT):
+                self.button7.enable()        
+        if (self.button7.click_count > self.PLANET_COUNT):
                 self.button8.enable()
-            
-        elif (self.button8.enabled == True and self.button8 in self.mouse.physics.currentCollisions and self.mouse.is_clicking == True):
-            self.button8.click_count = self.button8.click_count + 1
-            self.button8.button_text.rend.fontString = self.button8.button_text.rend.base_text + ": " + str(self.button8.click_count)
-            self.button8.rend.dirty = True
 
+    def process_button(self, button):
+        if(button.enabled == True and button in self.mouse.physics.currentCollisions and self.mouse.is_clicking == True):
+            button.click_count = button.click_count + 1
+            button.button_text.rend.fontString = button.button_text.rend.base_text + ": " + str(button.click_count)
+            print button.button_text.rend.fontString
+            button.button_text.rend.dirty = True
+    
     def createButton(self, x, y, text, enabled):
         e = Button()
         e.enabled = enabled
