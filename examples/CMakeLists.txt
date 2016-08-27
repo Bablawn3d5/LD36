@@ -35,6 +35,7 @@ file(GLOB ExampleResources
     ${SCRIPTDIR}/action/fire.py
     ${SCRIPTDIR}/action/shooter.py
     ${SCRIPTDIR}/action/explosion.py
+    ${SCRIPTDIR}/action/buttons.py
     ${SCRIPTDIR}/action/follower.py
     ${SCRIPTDIR}/entityx/__init__.py
     ${SCRIPTDIR}/gamemath/__init__.py
@@ -43,10 +44,12 @@ file(GLOB ExampleResources
     ${FarquaadExamples_SOURCE_DIR}/Config.json
     ${FarquaadExamples_SOURCE_DIR}/Resources/BG.json
     ${FarquaadExamples_SOURCE_DIR}/Resources/Box.json
+    ${FarquaadExamples_SOURCE_DIR}/Resources/ButtonController.json
     ${FarquaadExamples_SOURCE_DIR}/Resources/Hero.json
     ${FarquaadExamples_SOURCE_DIR}/Resources/Mouse.json
     ${FarquaadExamples_SOURCE_DIR}/Resources/Light.json
     ${FarquaadExamples_SOURCE_DIR}/fonts/arial.ttf
+    ${FarquaadExamples_SOURCE_DIR}/images/button.png
     ${FarquaadExamples_SOURCE_DIR}/images/Light.png
     ${FarquaadExamples_SOURCE_DIR}/images/FlameOn.png
     ${FarquaadExamples_SOURCE_DIR}/images/perfectface.png

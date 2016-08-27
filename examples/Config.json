@@ -16,6 +16,7 @@
   "entities" : [
     "./Resources/BG.json",
     "./Resources/Hero.json",
+    "./Resources/ButtonController.json",
     "./Resources/Mouse.json",
     "./Resources/Light.json",
     "./Resources/Box.json"
