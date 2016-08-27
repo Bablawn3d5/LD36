@@ -26,7 +26,7 @@ class MouseFollower(Follower):
         self.is_clicking = False
         self.click_cooldown = 0.1
         self.current_cooldown = 0
-        self.previous_dts = [0] * 10
+        self.previous_dts = [0] * 20
         self.cur_index = 0
 
     def update(self, dt):
@@ -41,11 +41,11 @@ class MouseFollower(Follower):
         # Average an interpolated DT
         self.previous_dts[self.cur_index] = dt
         self.cur_index += 1
-        self.cur_index =self.cur_index % 10
+        self.cur_index = self.cur_index % 20
         # If close enough just set speed to 0, else smooth speed to dest
         if(distance_to_travel > 0.05 and dt > 0):
             # Speed = smoothed dt
-            new_speed = (distance_to_travel / (sum(self.previous_dts)/5))
+            new_speed = (distance_to_travel / max(sum(self.previous_dts)/20, 0.016))
             self.stats.speed = new_speed
         else:
             self.stats.speed = 0
