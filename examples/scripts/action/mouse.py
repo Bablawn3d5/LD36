@@ -1,6 +1,6 @@
 import entityx
 import math
-from _entityx_components import InputResponder, Body, Physics, Stats, b2BodyType, CollisionCategory, Renderable, Sound
+from _entityx_components import InputResponder, Body, Physics, Stats, b2BodyType, CollisionCategory, Renderable
 from gamemath import vector2
 from follower import Follower
 

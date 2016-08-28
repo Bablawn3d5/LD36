@@ -41,8 +41,6 @@ class Exploder(entityx.Entity):
                 phys.isDirty = True
                 pos = Vector2(self.body.position) - 0.5*Vector2(e.explode.explode_size, e.explode.explode_size)
                 pos.copy_to(bod.position)
-                sound = e.Component(Sound)
-                sound.name = "sounds/Explode.wav"
 
 
 class Explosion(entityx.Entity):
