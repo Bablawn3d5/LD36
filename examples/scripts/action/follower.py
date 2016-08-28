@@ -28,7 +28,7 @@ class Follower(entityx.Entity):
         next_direction_vec = dest_pos - next_pos
         next_direction_vec.normalize()
 
-        if((direction_vec.get_x() + next_direction_vec.get_x()) > 1.0 or (direction_vec.get_y() + next_direction_vec.get_y()) > 1.0):
+        if(abs(direction_vec.get_x() + next_direction_vec.get_x()) > 1.0 or abs(direction_vec.get_y() + next_direction_vec.get_y()) > 1.0):
             # We haven't passed our destination in the next frame, so keep on course
             direction_vec.copy_to(self.body.direction)
         else:
