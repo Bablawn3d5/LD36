@@ -57,4 +57,3 @@ class Orbital(entityx.Entity):
         if (self.cur_dt >= self.totalTime):
             self.cur_dt = 0
         self.physics.dirty = True
-        print "(%d %d)" % (self.body.position.x, self.body.position.y)
