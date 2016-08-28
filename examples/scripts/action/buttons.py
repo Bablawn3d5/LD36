@@ -4,6 +4,7 @@ from mouse import MouseFollower
 from _entityx_components import Renderable, Body, Physics, Stats, b2BodyType, CollisionCategory
 from gamemath import vector2
 from follower import Orbital
+from spawner import MagicSpawner
 
 Vector2 = vector2.Vector2
 TILESIZE_X = 80
@@ -108,7 +109,8 @@ class ButtonController(entityx.Entity):
             newPhysics.size.x = 80
             newPhysics.size.y = 60
             newPhysics.category = CollisionCategory.CATEGORY_16
-            newPhysics.mask.bits = CollisionCategory.CATEGORY_16
+            # Colldie with mouse interactables and orbital junk
+            newPhysics.mask.bits = CollisionCategory.CATEGORY_16 | CollisionCategory.CATEGORY_15
             newRenderable = self.box.Component(Renderable)
             newRenderable.texture = "./images/FlameOn.png"
 
@@ -159,6 +161,15 @@ class ButtonController(entityx.Entity):
             button.button_text.rend.dirty = True
             self.current_score -= button.cost_to_click
             button.increaseClickCost()
+            if(button.button_text.rend.base_text == "Sticks"):
+                MagicSpawner.spawnStix(Vector2(self.spawner.body.position), self.spawner.center, 50, 250)
+            # if(button.button_text.rend.base_text == "Trees"):
+            # if(button.button_text.rend.base_text == "People"):
+            # if(button.button_text.rend.base_text == "Buildings"):
+            # if(button.button_text.rend.base_text == "Cities"):
+            # if(button.button_text.rend.base_text == "Continent"):
+            # if(button.button_text.rend.base_text == "Planets"):
+            # if(button.button_text.rend.base_text == "Galaxies"):
 
     def createButton(self, x, y, text, cost, enabled):
         e = Button()

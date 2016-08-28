@@ -35,6 +35,7 @@ file(GLOB ExampleResources
     ${SCRIPTDIR}/action/fire.py
     ${SCRIPTDIR}/action/shooter.py
     ${SCRIPTDIR}/action/explosion.py
+    ${SCRIPTDIR}/action/spawner.py
     ${SCRIPTDIR}/action/buttons.py
     ${SCRIPTDIR}/action/follower.py
     ${SCRIPTDIR}/entityx/__init__.py
@@ -53,6 +54,10 @@ file(GLOB ExampleResources
     ${FarquaadExamples_SOURCE_DIR}/images/Light.png
     ${FarquaadExamples_SOURCE_DIR}/images/FlameOn.png
     ${FarquaadExamples_SOURCE_DIR}/images/perfectface.png
+    ${FarquaadExamples_SOURCE_DIR}/images/background.png
+    ${FarquaadExamples_SOURCE_DIR}/images/stick_1.png
+    ${FarquaadExamples_SOURCE_DIR}/images/stick_2.png
+    ${FarquaadExamples_SOURCE_DIR}/images/tree_1.png
     ${FarquaadExamples_SOURCE_DIR}/images/background.png
     ${FarquaadExamples_SOURCE_DIR}/sounds/Explode.wav
     ${PYTHON27_STD_ZIP})
