@@ -1,8 +1,8 @@
 import entityx
 from _entityx_components import CollisionCategory, Body, Renderable, InputResponder, Physics, Stats, b2BodyType
-from follower import Follower
+from follower import Follower, OrbitalToCenter
 from gamemath import vector2
-from random import randint
+from random import randint, uniform
 
 Vector2 = vector2.Vector2
 
@@ -10,8 +10,10 @@ class MagicSpawner():
     @classmethod
     def spawnThing(self, spawn_pos, dest_pos, size, speed):
         # TODO(SMA) : Load from JSON file.
-        e = Follower()
-        e.dest = dest_pos
+        e = OrbitalToCenter()
+        e.center = dest_pos
+        e.r = (spawn_pos - dest_pos).get_magnitude()
+        e.s = uniform(0.5,2.5)
         bod = e.Component(Body)
         spawn_pos.copy_to(bod.position)
         phys = e.Component(Physics)

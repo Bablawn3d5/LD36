@@ -1,5 +1,5 @@
 import entityx
-from _entityx_components import Body, Physics, Stats
+from _entityx_components import Body, Physics, Stats, Destroyed
 from explosion import Exploder, Explodes
 from gamemath import vector2
 import math
@@ -57,3 +57,28 @@ class Orbital(entityx.Entity):
         if (self.cur_dt >= self.totalTime):
             self.cur_dt = 0
         self.physics.dirty = True
+
+
+class OrbitalToCenter(entityx.Entity):
+    def __init__(self):
+        self.body = self.Component(Body)
+        self.physics = self.Component(Physics)
+        self.stats = self.Component(Stats)
+        self.center = Vector2()
+        self.s = 1.0
+        self.r = 1
+        self.cur_dt = 0
+        self.totalTime = 1.0
+        self.explode = Explodes()
+        self.death = self.Component(Destroyed)
+        self.death.timer = 25
+
+    def update(self, dt):
+        self.cur_dt += dt
+        percent = (self.cur_dt/self.totalTime)
+        self.body.position.x = self.center.x + self.r * (1-percent) * math.sin( self.s*math.pi + percent * 2*math.pi)
+        self.body.position.y = self.center.y + self.r * (1-percent) * math.cos( self.s*math.pi + percent * 2*math.pi)
+        if (self.cur_dt >= self.totalTime):
+            self.cur_dt = 0
+        self.physics.dirty = True
+        Exploder.check_explodes(self, dt)
