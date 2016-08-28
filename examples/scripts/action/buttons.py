@@ -26,6 +26,8 @@ class Button(entityx.Entity):
         self.updated = False
         self.enabled = False
         self.cost_to_click = 0
+        self.timer = 0
+        self.current_timer = 0
 
         self.recurring_value = 0
         self.button_text = ButtonText()
@@ -45,11 +47,11 @@ class Button(entityx.Entity):
     def increaseClickCost(self):
         if self.enabled == True:
             self.cost_to_click = self.cost_to_click + 1
-            self.button_cost_text.rend.fontString = "Cost: " + str(self.cost_to_click) + " (" + str(self.click_count * self.recurring_value) + " h/s)"
+            self.button_cost_text.rend.fontString = "Cost: " + str(self.cost_to_click) + " (" + str(round(self.click_count * self.recurring_value / self.timer, 2)) + " h/s)"
             self.button_cost_text.rend.dirty = True
 
     def update(self, dt):
-        # Do nothing.
+        self.current_timer += dt
         self.updated = True
 
 class ButtonText(entityx.Entity):
@@ -88,36 +90,18 @@ class ButtonController(entityx.Entity):
         self.CONTINENT_COUNT = 10
         self.PLANET_COUNT = 10
 
-        self.STICK_COOLDOWN = 1
-        self.TREE_COOLDOWN = 2
-        self.PEOPLE_COOLDOWN = 3
-        self.BUILDING_COOLDOWN = 4
-        self.CITY_COOLDOWN = 5
-        self.CONTINENT_COOLDOWN = 6
-        self.PLANET_COOLDOWN = 7
-        self.GALAXY_COOLDOWN = 8
-
-        self.stick_timer = 0
-        self.tree_timer = 0
-        self.people_timer = 0
-        self.building_timer = 0
-        self.city_timer = 0
-        self.continent_timer = 0
-        self.planet_timer = 0
-        self.galaxy_timer = 0
-
         self.mouse = MouseFollower()
 
     def update(self, dt):
         if (self.init == False):
-            self.button1 = self.createButton(TILESIZE_X*0,TILESIZE_Y*2, "Sticks", 5, 1, True)
-            self.button2 = self.createButton(TILESIZE_X*0,TILESIZE_Y*3, "Trees", 6, 2, False)
-            self.button3 = self.createButton(TILESIZE_X*0,TILESIZE_Y*4, "People", 7, 3, False)
-            self.button4 = self.createButton(TILESIZE_X*0,TILESIZE_Y*5, "Buildings", 8, 4, False)
-            self.button5 = self.createButton(TILESIZE_X*0,TILESIZE_Y*6, "Cities", 9, 5, False)
-            self.button6 = self.createButton(TILESIZE_X*0,TILESIZE_Y*7, "Continent", 10, 6, False)
-            self.button7 = self.createButton(TILESIZE_X*0,TILESIZE_Y*8, "Planets", 11, 7, False)
-            self.button8 = self.createButton(TILESIZE_X*0,TILESIZE_Y*9, "Galaxies", 12, 8, False)
+            self.button1 = self.createButton(TILESIZE_X*0,TILESIZE_Y*2, "Sticks", 5, 1, 1, True)
+            self.button2 = self.createButton(TILESIZE_X*0,TILESIZE_Y*3, "Trees", 6, 2, 2, False)
+            self.button3 = self.createButton(TILESIZE_X*0,TILESIZE_Y*4, "People", 7, 3, 3, False)
+            self.button4 = self.createButton(TILESIZE_X*0,TILESIZE_Y*5, "Buildings", 8, 4, 3, False)
+            self.button5 = self.createButton(TILESIZE_X*0,TILESIZE_Y*6, "Cities", 9, 5, 5, False)
+            self.button6 = self.createButton(TILESIZE_X*0,TILESIZE_Y*7, "Continent", 10, 6, 6, False)
+            self.button7 = self.createButton(TILESIZE_X*0,TILESIZE_Y*8, "Planets", 11, 7, 7, False)
+            self.button8 = self.createButton(TILESIZE_X*0,TILESIZE_Y*9, "Galaxies", 12, 8, 8, False)
             self.box = entityx.Entity()
             newBody = self.box.Component(Body)
             newBody.position.x = 480
@@ -170,49 +154,6 @@ class ButtonController(entityx.Entity):
         if (self.button7.click_count > self.PLANET_COUNT):
                 self.button8.enable()
 
-        self.stick_timer += dt
-        self.tree_timer += dt
-        self.people_timer += dt
-        self.building_timer += dt
-        self.city_timer += dt
-        self.continent_timer += dt
-        self.planet_timer += dt
-        self.galaxy_timer += dt
-
-        repaintScore = False
-        if (self.stick_timer >= self.STICK_COOLDOWN):
-            self.stick_timer = 0
-            self.current_score += self.button1.click_count * self.button1.recurring_value
-            repaintScore = True;
-        if (self.tree_timer >= self.TREE_COOLDOWN):
-            self.tree_timer = 0
-            self.current_score += self.button2.click_count * self.button2.recurring_value
-            repaintScore = True;
-        if (self.people_timer >= self.PEOPLE_COOLDOWN):
-            self.people_timer = 0
-            self.current_score += self.button3.click_count * self.button3.recurring_value
-            repaintScore = True;
-        if (self.building_timer >= self.BUILDING_COOLDOWN):
-            self.building_timer = 0
-            self.current_score += self.button4.click_count * self.button4.recurring_value
-            repaintScore = True;
-        if (self.city_timer >= self.CITY_COOLDOWN):
-            self.city_timer = 0
-            self.current_score += self.button5.click_count * self.button5.recurring_value
-            repaintScore = True;
-        if (self.continent_timer >= self.CONTINENT_COOLDOWN):
-            self.continent_timer = 0
-            self.current_score += self.button6.click_count * self.button6.recurring_value
-            repaintScore = True;
-        if (self.planet_timer >= self.PLANET_COOLDOWN):
-            self.planet_timer = 0
-            self.current_score += self.button7.click_count * self.button7.recurring_value
-            repaintScore = True;
-        if (self.galaxy_timer >= self.GALAXY_COOLDOWN):
-            self.galaxy_timer = 0
-            self.current_score += self.button8.click_count * self.button8.recurring_value
-            repaintScore = True;
-
         if (self.box in self.mouse.physics.currentCollisions and self.mouse.is_clicking == True):
             self.current_score += 1
             # Make a sound on click
@@ -220,9 +161,8 @@ class ButtonController(entityx.Entity):
             sound = e.Component(Sound)
             sound.name = "sounds/Explode.wav"
 
-        if(self.mouse.is_clicking == True or repaintScore == True):
-            self.rend.fontString = "Heat: " + str(self.current_score)
-            self.rend.dirty = True
+        self.rend.fontString = "Heat: " + str(self.current_score)
+        self.rend.dirty = True
 
     def process_button(self, button):
         if(button.enabled == True and button.cost_to_click <= self.current_score and button in self.mouse.physics.currentCollisions and self.mouse.is_clicking == True):
@@ -250,16 +190,22 @@ class ButtonController(entityx.Entity):
             if(button.button_text.rend.base_text == "Galaxies"):
                 MagicSpawner.spawnGalaxy(Vector2(self.spawner.body.position), self.spawner.center, 50, 250)
 
+        if (button.current_timer >= button.timer):
+            button.current_timer = 0
+            self.current_score += button.click_count * button.recurring_value
+
             # Make a sound on click
             e = entityx.Entity()
             sound = e.Component(Sound)
             sound.name = "sounds/Explode.wav"
 
-    def createButton(self, x, y, text, cost, value, enabled):
+    def createButton(self, x, y, text, cost, value, timer, enabled):
+
         e = Button()
         e.enabled = enabled
         e.cost_to_click = cost
         e.recurring_value = value
+        e.timer = timer
 
         e.body.position.x = x
         e.body.position.y = y
