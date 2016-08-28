@@ -211,14 +211,15 @@ class ButtonController(entityx.Entity):
             if(button.button_text.rend.base_text == "Galaxies"):
                 MagicSpawner.spawnGalaxy(Vector2(self.spawner.body.position), self.spawner.center, 50, 250)
 
-        if (button.current_timer >= button.timer):
-            button.current_timer = 0
-            self.current_score += button.click_count * button.recurring_value
-
             # Make a sound on click
             e = entityx.Entity()
             sound = e.Component(Sound)
             sound.name = "sounds/Explode.wav"
+            
+        if (button.current_timer >= button.timer):
+            button.current_timer = 0
+            self.current_score += button.click_count * button.recurring_value
+
 
     def createButton(self, x, y, text, cost, value, timer, enabled):
 
