@@ -1,7 +1,7 @@
 import entityx
 import math
 from mouse import MouseFollower
-from _entityx_components import Renderable, Body, Physics, Stats, b2BodyType, CollisionCategory, Sound
+from _entityx_components import Destroyed, Renderable, Body, Physics, Stats, b2BodyType, CollisionCategory, Sound
 from gamemath import vector2
 from follower import Orbital
 from spawner import MagicSpawner
@@ -165,6 +165,8 @@ class ButtonController(entityx.Entity):
             self.current_score += 1
             # Make a sound on click
             e = entityx.Entity()
+            e.death = e.Component(Destroyed)
+            e.death.timer = 2
             sound = e.Component(Sound)
             sound.name = "sounds/Explode.wav"
 
@@ -190,6 +192,12 @@ class ButtonController(entityx.Entity):
             newRenderable.r = 186
             newRenderable.g = 26
             newRenderable.b = 119
+
+            e = entityx.Entity()
+            sound = e.Component(Sound)
+            e.death = e.Component(Destroyed)
+            e.death.timer = 2
+            sound.name = "sounds/tada.wav"
 
 
     def process_button(self, button):
@@ -227,6 +235,8 @@ class ButtonController(entityx.Entity):
 
              # Make a sound on click
             e = entityx.Entity()
+            e.death = e.Component(Destroyed)
+            e.death.timer = 2
             sound = e.Component(Sound)
             sound.name = "sounds/Explode.wav"
 

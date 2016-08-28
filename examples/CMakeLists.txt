@@ -60,6 +60,7 @@ file(GLOB ExampleResources
     ${FarquaadExamples_SOURCE_DIR}/images/*.png
     ${FarquaadExamples_SOURCE_DIR}/images/background.png
     ${FarquaadExamples_SOURCE_DIR}/sounds/Explode.wav
+    ${FarquaadExamples_SOURCE_DIR}/sounds/tada.wav
     ${PYTHON27_STD_ZIP})
 
 add_custom_target(CopyExampleResources DEPENDS ${ExampleResources})
