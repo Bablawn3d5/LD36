@@ -2,6 +2,7 @@ import entityx
 from _entityx_components import Body, Physics, Stats
 from explosion import Exploder, Explodes
 from gamemath import vector2
+import math
 
 Vector2 = vector2.Vector2
 
@@ -23,10 +24,10 @@ class Follower(entityx.Entity):
         next_pos = Vector2()
         next_pos.set_x(cur_pos.get_x() + self.stats.speed * dt)
         next_pos.set_y(cur_pos.get_y() + self.stats.speed * dt)
-        
+
         next_direction_vec = dest_pos - next_pos
         next_direction_vec.normalize()
-        
+
         if((direction_vec.get_x() + next_direction_vec.get_x()) > 1.0 or (direction_vec.get_y() + next_direction_vec.get_y()) > 1.0):
             # We haven't passed our destination in the next frame, so keep on course
             direction_vec.copy_to(self.body.direction)
@@ -35,6 +36,25 @@ class Follower(entityx.Entity):
             direction_vec.set_y(0)
             direction_vec.copy_to(self.body.direction)
             dest_pos.copy_to(self.body.position)
-            
+
         Exploder.check_explodes(self, dt)
 
+
+class Orbital(entityx.Entity):
+    def __init__(self):
+        self.body = self.Component(Body)
+        self.physics = self.Component(Physics)
+        self.stats = self.Component(Stats)
+        self.center = Vector2()
+        self.r = 1
+        self.cur_dt = 0
+        self.totalTime = 1.0
+
+    def update(self, dt):
+        self.cur_dt += dt
+        self.body.position.x = self.center.x + self.r * math.sin( (self.cur_dt/self.totalTime) * 2*math.pi)
+        self.body.position.y = self.center.y + self.r * math.cos( (self.cur_dt/self.totalTime) * 2*math.pi)
+        if (self.cur_dt >= self.totalTime):
+            self.cur_dt = 0
+        self.physics.dirty = True
+        print "(%d %d)" % (self.body.position.x, self.body.position.y)

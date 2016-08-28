@@ -2,6 +2,7 @@ import entityx
 from mouse import MouseFollower
 from _entityx_components import Renderable, Body, Physics, Stats, b2BodyType, CollisionCategory
 from gamemath import vector2
+from follower import Orbital
 
 Vector2 = vector2.Vector2
 TILESIZE_X = 80
@@ -22,9 +23,9 @@ class Button(entityx.Entity):
             self.body.position.y + self.physics.size.y/2)
         self.updated = False
         self.enabled = False
-        
+
         self.button_text = ButtonText()
-        
+
         self.click_count = 0
 
     def enable(self):
@@ -32,7 +33,7 @@ class Button(entityx.Entity):
             self.enabled = True
             self.button_text.rend.fontString = self.button_text.rend.base_text + ": 0"
             self.button_text.rend.dirty = True;
-        
+
     def update(self, dt):
         # Do nothing.
         self.updated = True
@@ -47,7 +48,7 @@ class ButtonText(entityx.Entity):
     def update(self, dt):
         # Do nothing.
         self.updated = True
-        
+
 class ButtonController(entityx.Entity):
     def __init__(self):
         self.body = self.Component(Body)
@@ -56,7 +57,7 @@ class ButtonController(entityx.Entity):
             self.body.position.y + self.physics.size.y/2)
         self.init = False
         self.current_score = 0
-        
+
         self.rend = self.Component(Renderable)
         self.rend.font = "./fonts/arial.ttf"
         self.rend.fontString = "Score: 0"
@@ -64,7 +65,7 @@ class ButtonController(entityx.Entity):
         self.rend.g = 190
         self.rend.b = 78
         self.rend.a = 190
-        
+
         self.STICK_COUNT = 10
         self.TREE_COUNT = 10
         self.PEOPLE_COUNT = 10
@@ -72,7 +73,7 @@ class ButtonController(entityx.Entity):
         self.CITY_COUNT = 10
         self.CONTINENT_COUNT = 10
         self.PLANET_COUNT = 10
-        
+
         self.mouse = MouseFollower()
 
     def update(self, dt):
@@ -85,7 +86,7 @@ class ButtonController(entityx.Entity):
             self.button6 = self.createButton(TILESIZE_X*0,TILESIZE_Y*7, "Continent", False)
             self.button7 = self.createButton(TILESIZE_X*0,TILESIZE_Y*8, "Planets", False)
             self.button8 = self.createButton(TILESIZE_X*0,TILESIZE_Y*9, "Galaxies", False)
-            
+
             self.box = entityx.Entity()
             newBody = self.box.Component(Body)
             newBody.position.x = 480
@@ -99,14 +100,21 @@ class ButtonController(entityx.Entity):
             newPhysics.mask.bits = CollisionCategory.CATEGORY_16
             newRenderable = self.box.Component(Renderable)
             newRenderable.texture = "./images/FlameOn.png"
-            
+
+            self.spawner = Orbital()
+            self.spawner.center = Vector2(newBody.position)
+            self.spawner.physics.size.x = 50
+            self.spawner.physics.size.y = 50
+            self.spawner.r = 200
+            self.spawner.totalTime = 5
+
             self.init = True
-            
+
         if (self.box in self.mouse.physics.currentCollisions and self.mouse.is_clicking == True):
             self.current_score = self.current_score + 1
             self.rend.fontString = "Score: " + str(self.current_score)
             self.rend.dirty = True
-        
+
         self.process_button(self.button1)
         self.process_button(self.button2)
         self.process_button(self.button3)
@@ -115,7 +123,7 @@ class ButtonController(entityx.Entity):
         self.process_button(self.button6)
         self.process_button(self.button7)
         self.process_button(self.button8)
-        
+
         if (self.button1.click_count > self.STICK_COUNT):
                 self.button2.enable()
         if (self.button2.click_count > self.TREE_COUNT):
@@ -127,7 +135,7 @@ class ButtonController(entityx.Entity):
         if (self.button5.click_count > self.CITY_COUNT):
                 self.button6.enable()
         if (self.button6.click_count > self.CONTINENT_COUNT):
-                self.button7.enable()        
+                self.button7.enable()
         if (self.button7.click_count > self.PLANET_COUNT):
                 self.button8.enable()
 
@@ -137,17 +145,17 @@ class ButtonController(entityx.Entity):
             button.button_text.rend.fontString = button.button_text.rend.base_text + ": " + str(button.click_count)
             print button.button_text.rend.fontString
             button.button_text.rend.dirty = True
-    
+
     def createButton(self, x, y, text, enabled):
         e = Button()
         e.enabled = enabled
-        
+
         e.body.position.x = x
         e.body.position.y = y
-        
+
         e.button_text.body.position.x = x + 10
         e.button_text.body.position.y = y
-        
+
         e.button_text.rend.font = "./fonts/arial.ttf"
         if (enabled == True):
             e.button_text.rend.fontString = str(text) + ": 0"
@@ -158,6 +166,6 @@ class ButtonController(entityx.Entity):
         e.button_text.rend.g = 190
         e.button_text.rend.b = 78
         e.button_text.rend.a = 190
-        
+
         return e
-        
+
