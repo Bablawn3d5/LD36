@@ -221,7 +221,6 @@ class ButtonController(entityx.Entity):
             self.current_score += button.click_count * button.recurring_value
 
 
-
     def createButton(self, x, y, text, cost, value, timer, enabled):
 
         e = Button()
