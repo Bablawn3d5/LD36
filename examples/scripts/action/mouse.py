@@ -1,6 +1,6 @@
 import entityx
 import math
-from _entityx_components import InputResponder, Body, Physics, Stats, b2BodyType, CollisionCategory
+from _entityx_components import InputResponder, Body, Physics, Stats, b2BodyType, CollisionCategory, Renderable, Sound
 from gamemath import vector2
 from follower import Follower
 
@@ -28,6 +28,13 @@ class MouseFollower(Follower):
         self.current_cooldown = 0
         self.previous_dts = [0] * 20
         self.cur_index = 0
+
+        # HIDES THE BUG WHERE A WHITE BOX RANDOMLY APPEARS
+        self.rend = self.Component(Renderable)
+        self.rend.font = "./fonts/arial.ttf"
+        self.rend.fontString = ""
+
+
 
     def update(self, dt):
         self.is_clicking = False

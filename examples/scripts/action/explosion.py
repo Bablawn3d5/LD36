@@ -1,6 +1,6 @@
 import entityx
 from _entityx import Entity
-from _entityx_components import Sound, CollisionCategory, Destroyed, Body, Physics, Stats, b2BodyType
+from _entityx_components import Sound, CollisionCategory, Destroyed, Body, Physics, Stats, b2BodyType, Renderable
 from gamemath import vector2
 
 Vector2 = vector2.Vector2
@@ -19,6 +19,10 @@ class Exploder(entityx.Entity):
         self.physics = self.Component(Physics)
         self.explode = Explodes()
         self.dest = None
+        # HIDES THE BUG WHERE A WHITE BOX RANDOMLY APPEARS
+        self.rend = self.Component(Renderable)
+        self.rend.font = "./fonts/arial.ttf"
+        self.rend.fontString = ""
 
     @staticmethod
     def check_explodes(self, dt):
@@ -47,6 +51,10 @@ class Explosion(entityx.Entity):
         self.physics = self.Component(Physics)
         self.stats = self.Component(Stats)
         self.explode = Explodes()
+        # HIDES THE BUG WHERE A WHITE BOX RANDOMLY APPEARS
+        self.rend = self.Component(Renderable)
+        self.rend.font = "./fonts/arial.ttf"
+        self.rend.fontString = ""
         self.initd = False
         self.physics.isSensor  = True
         self.physics.size.x    = 0

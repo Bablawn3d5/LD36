@@ -1,7 +1,7 @@
 import entityx
 import math
 from mouse import MouseFollower
-from _entityx_components import Renderable, Body, Physics, Stats, b2BodyType, CollisionCategory
+from _entityx_components import Renderable, Body, Physics, Stats, b2BodyType, CollisionCategory, Sound
 from gamemath import vector2
 from follower import Orbital
 from spawner import MagicSpawner
@@ -134,6 +134,10 @@ class ButtonController(entityx.Entity):
             newRenderable.texture = "./images/FlameOn.png"
 
             self.spawner = Orbital()
+            # HIDES BUG WHERE WHITE BOX APPEARS RANDMMLYD
+            rend = self.spawner.Component(Renderable)
+            rend.font = "./fonts/arial.ttf"
+            rend.fontString = ""
             self.spawner.center = Vector2(newBody.position)
             self.spawner.physics.size.x = 50
             self.spawner.physics.size.y = 50
@@ -241,6 +245,11 @@ class ButtonController(entityx.Entity):
                 MagicSpawner.spawnPlanet(Vector2(self.spawner.body.position), self.spawner.center, 50, 250)
             if(button.button_text.rend.base_text == "Galaxies"):
                 MagicSpawner.spawnGalaxy(Vector2(self.spawner.body.position), self.spawner.center, 50, 250)
+
+            # Make a sound on click
+            e = entityx.Entity()
+            sound = e.Component(Sound)
+            sound.name = "sounds/Explode.wav"
 
     def createButton(self, x, y, text, cost, value, enabled):
         e = Button()
