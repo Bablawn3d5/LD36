@@ -62,16 +62,12 @@ class Orbital(entityx.Entity):
 class OrbitalToCenter(entityx.Entity):
     def __init__(self):
         self.body = self.Component(Body)
-        self.physics = self.Component(Physics)
         self.stats = self.Component(Stats)
         self.center = Vector2()
         self.s = 1.0
         self.r = 1
         self.cur_dt = 0
         self.totalTime = 1.0
-        self.explode = Explodes()
-        self.death = self.Component(Destroyed)
-        self.death.timer = 25
 
     def update(self, dt):
         self.cur_dt += dt
@@ -80,5 +76,3 @@ class OrbitalToCenter(entityx.Entity):
         self.body.position.y = self.center.y + self.r * (1-percent) * math.cos( self.s*math.pi + percent * 2*math.pi)
         if (self.cur_dt >= self.totalTime):
             self.cur_dt = 0
-        self.physics.dirty = True
-        Exploder.check_explodes(self, dt)

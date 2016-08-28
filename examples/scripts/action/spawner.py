@@ -1,5 +1,5 @@
 import entityx
-from _entityx_components import CollisionCategory, Body, Renderable, InputResponder, Physics, Stats, b2BodyType
+from _entityx_components import Destroyed, CollisionCategory, Body, Renderable, InputResponder, Physics, Stats, b2BodyType
 from follower import Follower, OrbitalToCenter
 from gamemath import vector2
 from random import randint, uniform
@@ -14,18 +14,15 @@ class MagicSpawner():
         e.center = dest_pos
         e.r = (spawn_pos - dest_pos).get_magnitude()
         e.s = uniform(0.5,2.5)
+        e.totalTime = uniform(1,3.75)
         bod = e.Component(Body)
         spawn_pos.copy_to(bod.position)
-        phys = e.Component(Physics)
-        phys.size.x = size
-        phys.size.y = size
-        phys.category = CollisionCategory.CATEGORY_15;
-        phys.mask.bits = CollisionCategory.CATEGORY_16;
-        phys.bodyType = b2BodyType.DYNAMIC
+        # Make it die after a minute
+        e.death = e.Component(Destroyed)
+        e.death.timer = 65
 
         stats = e.Component(Stats)
         stats.speed = speed
-        e.explode.can_explode = True
         return e
 
     @classmethod
