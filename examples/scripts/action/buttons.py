@@ -44,6 +44,13 @@ class Button(entityx.Entity):
             self.button_cost_text.rend.fontString = "Cost: " + str(self.cost_to_click) + " (0 h/s)"
             self.button_cost_text.rend.dirty = True
 
+    @classmethod
+    def increase_sticks(self, obj):
+        if obj.click_count < 10:
+            return 1
+        else:
+            return obj.cost_to_click + 1
+
     def increaseClickCost(self, cost_inc_func = lambda x: x.cost_to_click + 1 ):
         if self.enabled == True:
             self.cost_to_click = cost_inc_func(self)
@@ -192,24 +199,31 @@ class ButtonController(entityx.Entity):
             button.button_text.rend.dirty = True
             button.button_cost_text.rend.dirty = True
             self.current_score -= button.cost_to_click
-            button.increaseClickCost()
 
             if(button.button_text.rend.base_text == "Sticks"):
                 MagicSpawner.spawnStix(Vector2(self.spawner.body.position), self.spawner.center, 50, 250)
+                button.increaseClickCost(Button.increase_sticks)
             if(button.button_text.rend.base_text == "Trees"):
                 MagicSpawner.spawnTree(Vector2(self.spawner.body.position), self.spawner.center, 50, 250)
+                button.increaseClickCost()
             if(button.button_text.rend.base_text == "People"):
                 MagicSpawner.spawnPeople(Vector2(self.spawner.body.position), self.spawner.center, 50, 250)
+                button.increaseClickCost()
             if(button.button_text.rend.base_text == "Buildings"):
                 MagicSpawner.spawnBuilding(Vector2(self.spawner.body.position), self.spawner.center, 50, 250)
+                button.increaseClickCost()
             if(button.button_text.rend.base_text == "Cities"):
                 MagicSpawner.spawnCity(Vector2(self.spawner.body.position), self.spawner.center, 50, 250)
+                button.increaseClickCost()
             if(button.button_text.rend.base_text == "Continent"):
                 MagicSpawner.spawnContinent(Vector2(self.spawner.body.position), self.spawner.center, 50, 250)
+                button.increaseClickCost()
             if(button.button_text.rend.base_text == "Planets"):
                 MagicSpawner.spawnPlanet(Vector2(self.spawner.body.position), self.spawner.center, 50, 250)
+                button.increaseClickCost()
             if(button.button_text.rend.base_text == "Galaxies"):
                 MagicSpawner.spawnGalaxy(Vector2(self.spawner.body.position), self.spawner.center, 50, 250)
+                button.increaseClickCost()
 
              # Make a sound on click
             e = entityx.Entity()
