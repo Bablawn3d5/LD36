@@ -215,6 +215,10 @@ class ButtonController(entityx.Entity):
 
         if (self.box in self.mouse.physics.currentCollisions and self.mouse.is_clicking == True):
             self.current_score += 1
+            # Make a sound on click
+            e = entityx.Entity()
+            sound = e.Component(Sound)
+            sound.name = "sounds/Explode.wav"
 
         if(self.mouse.is_clicking == True or repaintScore == True):
             self.rend.fontString = "Heat: " + str(self.current_score)
