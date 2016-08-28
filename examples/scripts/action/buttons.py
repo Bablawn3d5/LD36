@@ -101,10 +101,10 @@ class ButtonController(entityx.Entity):
 
     def update(self, dt):
         if (self.init == False):
-            self.button1 = self.createButton(TILESIZE_X*0,TILESIZE_Y*2, "Sticks", 5, 1, 1, True)
+            self.button1 = self.createButton(TILESIZE_X*0,TILESIZE_Y*2, "Sticks", 0, 1, 1, True)
             self.button2 = self.createButton(TILESIZE_X*0,TILESIZE_Y*3, "Trees", 6, 2, 2, False)
             self.button3 = self.createButton(TILESIZE_X*0,TILESIZE_Y*4, "People", 7, 3, 3, False)
-            self.button4 = self.createButton(TILESIZE_X*0,TILESIZE_Y*5, "Buildings", 8, 4, 3, False)
+            self.button4 = self.createButton(TILESIZE_X*0,TILESIZE_Y*5, "Buildings", 8, 4, 4, False)
             self.button5 = self.createButton(TILESIZE_X*0,TILESIZE_Y*6, "Cities", 9, 5, 5, False)
             self.button6 = self.createButton(TILESIZE_X*0,TILESIZE_Y*7, "Continent", 10, 6, 6, False)
             self.button7 = self.createButton(TILESIZE_X*0,TILESIZE_Y*8, "Planets", 11, 7, 7, False)
