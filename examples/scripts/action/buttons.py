@@ -155,6 +155,27 @@ class ButtonController(entityx.Entity):
 
         self.rend.fontString = "Heat: " + str(self.current_score)
         self.rend.dirty = True
+        
+        if (self.button8.click_count == 100):
+            gameOverBox = entityx.Entity()
+            newBody = gameOverBox.Component(Body)
+            newBody.position.x = 260
+            newBody.position.y = 250
+            gameOverBox.Component(Stats)
+            newPhysics = gameOverBox.Component(Physics)
+            newPhysics.bodyType = b2BodyType.STATIC
+            newPhysics.size.x = 200
+            newPhysics.size.y = 300
+            newPhysics.category = CollisionCategory.CATEGORY_1
+            newPhysics.mask.bits = CollisionCategory.CATEGORY_1
+            newRenderable = gameOverBox.Component(Renderable)
+            newRenderable.font = "./fonts/arial.ttf"
+            newRenderable.fontSize = 30
+            newRenderable.fontString = "You Win!\nFollow us on twitter\n@tehPHEN\n@mitchcraig311"
+            newRenderable.r = 186
+            newRenderable.g = 26
+            newRenderable.b = 119
+            
 
     def process_button(self, button):    
         if(button.enabled == True and button.cost_to_click <= self.current_score and button in self.mouse.physics.currentCollisions and self.mouse.is_clicking == True):
