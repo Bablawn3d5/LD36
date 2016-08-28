@@ -44,9 +44,9 @@ class Button(entityx.Entity):
             self.button_cost_text.rend.fontString = "Cost: " + str(self.cost_to_click) + " (0 h/s)"
             self.button_cost_text.rend.dirty = True
 
-    def increaseClickCost(self):
+    def increaseClickCost(self, cost_inc_func = lambda x: x.cost_to_click + 1 ):
         if self.enabled == True:
-            self.cost_to_click = self.cost_to_click + 1
+            self.cost_to_click = cost_inc_func(self)
             self.button_cost_text.rend.fontString = "Cost: " + str(self.cost_to_click) + " (" + str(round(self.click_count * self.recurring_value / self.timer, 2)) + " h/s)"
             self.button_cost_text.rend.dirty = True
 
@@ -163,7 +163,7 @@ class ButtonController(entityx.Entity):
 
         self.rend.fontString = "Heat: " + str(self.current_score)
         self.rend.dirty = True
-        
+
         if (self.button8.click_count == 100):
             gameOverBox = entityx.Entity()
             newBody = gameOverBox.Component(Body)
@@ -183,7 +183,7 @@ class ButtonController(entityx.Entity):
             newRenderable.r = 186
             newRenderable.g = 26
             newRenderable.b = 119
-            
+
 
     def process_button(self, button):
         if(button.enabled == True and button.cost_to_click <= self.current_score and button in self.mouse.physics.currentCollisions and self.mouse.is_clicking == True):
@@ -211,14 +211,16 @@ class ButtonController(entityx.Entity):
             if(button.button_text.rend.base_text == "Galaxies"):
                 MagicSpawner.spawnGalaxy(Vector2(self.spawner.body.position), self.spawner.center, 50, 250)
 
+             # Make a sound on click
+            e = entityx.Entity()
+            sound = e.Component(Sound)
+            sound.name = "sounds/Explode.wav"
+
         if (button.current_timer >= button.timer):
             button.current_timer = 0
             self.current_score += button.click_count * button.recurring_value
 
-            # Make a sound on click
-            e = entityx.Entity()
-            sound = e.Component(Sound)
-            sound.name = "sounds/Explode.wav"
+
 
     def createButton(self, x, y, text, cost, value, timer, enabled):
 
