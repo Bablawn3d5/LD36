@@ -57,7 +57,7 @@ file(GLOB ExampleResources
     ${FarquaadExamples_SOURCE_DIR}/images/background.png
     ${FarquaadExamples_SOURCE_DIR}/images/stick_1.png
     ${FarquaadExamples_SOURCE_DIR}/images/stick_2.png
-    ${FarquaadExamples_SOURCE_DIR}/images/tree_1.png
+    ${FarquaadExamples_SOURCE_DIR}/images/*.png
     ${FarquaadExamples_SOURCE_DIR}/images/background.png
     ${FarquaadExamples_SOURCE_DIR}/sounds/Explode.wav
     ${PYTHON27_STD_ZIP})
