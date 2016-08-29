@@ -22,7 +22,7 @@ EVENT_TEXTS = [
 
 # 6->12: Plays at the end of game
 "The flame consumed the entire universe.",
-"There is nothing left to consume.",
+"There is little left to consume.",
 "The flame slowly dies, as the last few items burn.",
 "...",
 "....       ",

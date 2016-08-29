@@ -214,7 +214,7 @@ class ButtonController(entityx.Entity):
 
         if (self.button1.click_count > self.STICK_COUNT):
             self.button2.enable()
-            self.events.playEvent(Event("The flame consumes forests with ease.        "))
+            self.events.playEvent(Event("The flame consumes forests with ease        "))
             self.events.setColor(2)
 
         if (self.button2.click_count > self.TREE_COUNT):
@@ -307,38 +307,38 @@ class ButtonController(entityx.Entity):
             self.fireEvent(8, length = 2)
         if (self.time_count >= self.ending_start+12):
 # "...",
-            self.fireEvent(9, length = 1)
-        if (self.time_count >= self.ending_start+16):
+            self.fireEvent(9, length = 6)
+        if (self.time_count >= self.ending_start+20):
 # "...",
-            self.fireEvent(10, length=5)
-        if (self.time_count >= self.ending_start+21):
+            self.fireEvent(10, length=6)
+        if (self.time_count >= self.ending_start+21+9):
 # "The world once is void of any life.",
             self.fireEvent(11,length=6)
-        if (self.time_count >= self.ending_start+28):
+        if (self.time_count >= self.ending_start+28+9):
 # "...",
             self.fireEvent(12,length=1)
-        if (self.time_count >= self.ending_start+31):
+        if (self.time_count >= self.ending_start+31+9):
 # "There is only you, in this cold dark room.",
             if self.light != None:
                 self.light.Component(Destroyed)
                 self.light = None
             self.fireEvent(13, length = 8)
-        if (self.time_count >= self.ending_start+43):
+        if (self.time_count >= self.ending_start+43+9):
             # "...",
             self.fireEvent(14, length = 3)
-        if (self.time_count >= self.ending_start+46):
+        if (self.time_count >= self.ending_start+46+9):
 # "...",
             self.fireEvent(16, length = 2)
-        if (self.time_count >= self.ending_start+50):
+        if (self.time_count >= self.ending_start+50+9):
 # "There is only you, and these sticks.",
             self.fireEvent(17)
-        if (self.time_count >= self.ending_start+54):
+        if (self.time_count >= self.ending_start+54+9):
 # "You desire to be reunited with that feeling again...",
             self.fireEvent(18)
-        if (self.time_count >= self.ending_start+58):
+        if (self.time_count >= self.ending_start+58+9):
 # "You put some sticks together to start the flame."
             self.fireEvent(19)
-        if (self.time_count >= self.ending_start+64):
+        if (self.time_count >= self.ending_start+64+9):
             self.ending_done = True
 
 
