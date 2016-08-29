@@ -19,7 +19,7 @@ class MagicSpawner():
         spawn_pos.copy_to(bod.position)
         # Make it die after a 40 seconds for the ending.
         e.death = e.Component(Destroyed)
-        e.death.timer = 40
+        e.death.timer = 30
 
         stats = e.Component(Stats)
         stats.speed = speed

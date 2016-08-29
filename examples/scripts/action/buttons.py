@@ -257,7 +257,7 @@ class ButtonController(entityx.Entity):
             self.fireEvent(7, length = 2) # "There is nothing left to consume.",
         if (self.time_count >= self.ending_start+8):
 # "The flame not satisfied.. but theres nothing left",
-            self.fireEvent(8)
+            self.fireEvent(8, length = 2)
         if (self.time_count >= self.ending_start+12):
 # "...",
             self.fireEvent(9, length = 1)
@@ -270,15 +270,15 @@ class ButtonController(entityx.Entity):
         if (self.time_count >= self.ending_start+28):
 # "...",
             self.fireEvent(12,length=1)
-        if (self.time_count >= self.ending_start+30):
+        if (self.time_count >= self.ending_start+31):
 # "There is only you, in this cold dark room.",
             self.fireEvent(13, length = 8)
-        if (self.time_count >= self.ending_start+42):
+        if (self.time_count >= self.ending_start+43):
             # "...",
-            self.fireEvent(14, length = 4)
-        if (self.time_count >= self.ending_start+45):
+            self.fireEvent(14, length = 3)
+        if (self.time_count >= self.ending_start+46):
 # "...",
-            self.fireEvent(16)
+            self.fireEvent(16, length = 2)
         if (self.time_count >= self.ending_start+50):
 # "There is only you, and these sticks.",
             self.fireEvent(17)
@@ -288,7 +288,7 @@ class ButtonController(entityx.Entity):
         if (self.time_count >= self.ending_start+58):
 # "You put some sticks together to start the flame."
             self.fireEvent(19)
-        if (self.time_count >= self.ending_start+74):
+        if (self.time_count >= self.ending_start+66):
             self.ending_done = True
 
 
