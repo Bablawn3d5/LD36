@@ -5,6 +5,7 @@ from _entityx_components import Destroyed, Renderable, Body, Physics, Stats, b2B
 from gamemath import vector2
 from follower import Orbital
 from spawner import MagicSpawner
+from eventur import EventController, Event, EVENT_TEXTS
 
 Vector2 = vector2.Vector2
 TILESIZE_X = 80
@@ -97,9 +98,26 @@ class ButtonController(entityx.Entity):
         self.CONTINENT_COUNT = 10
         self.PLANET_COUNT = 10
 
+        self.time_count = 0
+        self.events_fired = [False] * 100
+
         self.mouse = MouseFollower()
 
     def update(self, dt):
+        self.time_count  += dt
+        if (self.time_count >= 3 and self.events_fired[0] == False):
+            self.events.playEvent(Event(EVENT_TEXTS[2]))
+            self.events_fired[0] = True
+        if (self.time_count >= 6 and self.events_fired[1] == False):
+            self.events.playEvent(Event(EVENT_TEXTS[3]))
+            self.events_fired[1] = True
+        if (self.time_count >= 9 and self.events_fired[2] == False):
+            self.events.playEvent(Event(EVENT_TEXTS[4]))
+            self.events_fired[2] = True
+        if (self.time_count >= 12 and self.events_fired[3] == False):
+            self.events.playEvent(Event(EVENT_TEXTS[5]))
+            self.events_fired[3] = True
+
         if (self.init == False):
             self.button1 = self.createButton(TILESIZE_X*0,TILESIZE_Y*2, "Sticks", 0, 1, 1, True)
             self.button2 = self.createButton(TILESIZE_X*0,TILESIZE_Y*3, "Trees", 6, 2, 2, False)
@@ -109,6 +127,13 @@ class ButtonController(entityx.Entity):
             self.button6 = self.createButton(TILESIZE_X*0,TILESIZE_Y*7, "Continent", 10, 6, 6, False)
             self.button7 = self.createButton(TILESIZE_X*0,TILESIZE_Y*8, "Planets", 11, 7, 7, False)
             self.button8 = self.createButton(TILESIZE_X*0,TILESIZE_Y*9, "Galaxies", 12, 8, 8, False)
+
+            self.events = EventController()
+            newBody = self.events.Component(Body)
+            newBody.position.x = 3 * TILESIZE_X + 5
+            newBody.position.y = 8 * TILESIZE_Y + 5
+            self.events.playEvent(Event(EVENT_TEXTS[1]))
+
             self.box = entityx.Entity()
             newBody = self.box.Component(Body)
             newBody.position.x = 480

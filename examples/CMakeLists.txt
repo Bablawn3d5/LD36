@@ -38,6 +38,7 @@ file(GLOB ExampleResources
     ${SCRIPTDIR}/action/spawner.py
     ${SCRIPTDIR}/action/buttons.py
     ${SCRIPTDIR}/action/follower.py
+    ${SCRIPTDIR}/action/eventur.py
     ${SCRIPTDIR}/entityx/__init__.py
     ${SCRIPTDIR}/gamemath/__init__.py
     ${SCRIPTDIR}/gamemath/vector2.py
@@ -61,6 +62,7 @@ file(GLOB ExampleResources
     ${FarquaadExamples_SOURCE_DIR}/images/background.png
     ${FarquaadExamples_SOURCE_DIR}/sounds/Explode.wav
     ${FarquaadExamples_SOURCE_DIR}/sounds/tada.wav
+    ${FarquaadExamples_SOURCE_DIR}/sounds/boop.wav
     ${PYTHON27_STD_ZIP})
 
 add_custom_target(CopyExampleResources DEPENDS ${ExampleResources})
