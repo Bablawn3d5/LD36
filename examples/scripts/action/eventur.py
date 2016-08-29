@@ -22,11 +22,11 @@ EVENT_TEXTS = [
 # 6->12: Plays at the end of game
 "The flame consumed the entire universe.",
 "There is nothing left to consume.",
-"The flame slowly dies.. theres nothing take.",
+"The flame slowly dies, as the last few items burn.",
 "...",
 "....",
 # HACK PAD IT OUT WITH WHITESPACES SO IT DOESN"T PRINT SO DAMM SLOW
-"The world is void of any life.                                 ",
+"The world again, is void of any life.                          ",
 "...  ",
 "There is only you, in this cold dark room.                   ",
 "...   ",
