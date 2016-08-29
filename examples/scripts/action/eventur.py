@@ -26,7 +26,7 @@ EVENT_TEXTS = [
 "...",
 "....",
 # HACK PAD IT OUT WITH WHITESPACES SO IT DOESN"T PRINT SO DAMM SLOW
-"The world again, is void of any life.                          ",
+"The world is void of any life.                          ",
 "...  ",
 "There is only you, in this cold dark room.                   ",
 "...   ",
