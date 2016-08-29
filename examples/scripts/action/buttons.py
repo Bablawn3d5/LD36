@@ -191,11 +191,11 @@ class ButtonController(entityx.Entity):
                 sound.name = "sounds/Explode.wav"
 
         # SCALING LOGIC GOES HERE:
-        if(self.current_score > 100):
+        if(self.current_score > 75 and self.time_count >= 12):
             self.fireEvent(5, length=1.5)
 
         # Time lock the first unlock
-        if(self.current_score > 150 and self.time_count >= 16):
+        if(self.current_score > 100 and self.time_count >= 16):
             self.button1.enable()
             self.events.playEvent(Event("The flame draws sticks on its own"))
             self.events.setColor(1)
