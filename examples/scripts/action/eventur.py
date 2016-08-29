@@ -9,20 +9,28 @@ Vector2 = vector2.Vector2
 # CHARACTER LIMIT IS ROUGHLY 50 CHARS
 EVENT_TEXTS = [
 "50CHARS50CHARS50CHARS50CHARS50CHARS50CHARS50CHARS",
+# 0->4: Intro, played right away
 "You sit in a dark room with only sticks around you.",
 "This world is void of any life.",
 "There is only you and these sticks...",
 "You put some sticks together to start the flame.",
 "Kindle the flame, it desires to be bigger.",
+
+# 5: After heat level >= 20
 "The flame flickers in the dark.",
+
 "You've consumed the entire universe."
 ]
 
 class Event(object):
+    def __eq__(self,other):
+        return self.event_text == other.event_text
+
     def __init__(self, string):
+        self.repeat = False
         self.old_count = 0
         self.event_current = 0
-        self.event_final = 3
+        self.event_final = 1
         self.event_text = string
         self.is_rendering = True
         self.sound_player_prog = re.compile("[AEIOUaeiouYyZzHhMmTtfF.]")
@@ -59,8 +67,16 @@ class EventController(entityx.Entity):
         self.rend.g = 190
         self.rend.b = 180
         self.rend.a = 200
-
         self.events = [None, None, None]
+
+        self.events_seen = []
+
+    def setColor(self, level):
+        if level == 1:
+            self.rend.r = 200
+            self.rend.g = 170
+            self.rend.b = 160
+            self.rend.a = 200
 
     def update(self, dt):
         event_line1, event_line2, event_line3 = [""]*3
@@ -74,7 +90,10 @@ class EventController(entityx.Entity):
         self.rend.dirty = True
 
     def playEvent(self, event):
+        if event.repeat == False and event in self.events_seen:
+            return
         if len(self.events) >= 3:
             self.events.pop(0)
         self.events.append(event)
+        self.events_seen.append(event)
 

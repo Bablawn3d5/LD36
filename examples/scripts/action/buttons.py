@@ -100,10 +100,11 @@ class ButtonController(entityx.Entity):
 
         self.time_count = 0
         self.events_fired = [False] * 100
+        self.event_game_done = False
 
         self.mouse = MouseFollower()
 
-    def fireEvent(self, numbah, length = 4):
+    def fireEvent(self, numbah, length = 3):
         if self.events_fired[numbah] == False:
             e = Event(EVENT_TEXTS[numbah+1])
             e.event_final = length
@@ -123,7 +124,7 @@ class ButtonController(entityx.Entity):
             self.fireEvent(4)
 
         if (self.init == False):
-            self.button1 = self.createButton(TILESIZE_X*0,TILESIZE_Y*2, "Sticks", 0, 1, 1, True)
+            self.button1 = self.createButton(TILESIZE_X*0,TILESIZE_Y*2, "Sticks", 0, 1, 1, False)
             self.button2 = self.createButton(TILESIZE_X*0,TILESIZE_Y*3, "Trees", 6, 2, 2, False)
             self.button3 = self.createButton(TILESIZE_X*0,TILESIZE_Y*4, "People", 7, 3, 3, False)
             self.button4 = self.createButton(TILESIZE_X*0,TILESIZE_Y*5, "Buildings", 8, 4, 4, False)
@@ -136,7 +137,7 @@ class ButtonController(entityx.Entity):
             newBody = self.events.Component(Body)
             newBody.position.x = 3 * TILESIZE_X + 5
             newBody.position.y = 8 * TILESIZE_Y + 5
-            self.playEvent(0)
+            self.fireEvent(0)
 
             self.box = entityx.Entity()
             newBody = self.box.Component(Body)
@@ -175,20 +176,49 @@ class ButtonController(entityx.Entity):
         self.process_button(self.button7)
         self.process_button(self.button8)
 
+        # SCALING LOGIC GOES HERE:
+        if(self.current_score > 50):
+            self.fireEvent(5, length=1.5)
+
+        if(self.current_score > 100):
+            self.button1.enable()
+            self.events.playEvent(Event("The flame draws sticks on its own"))
+            self.events.setColor(1)
+
         if (self.button1.click_count > self.STICK_COUNT):
-                self.button2.enable()
+            self.button2.enable()
+            self.events.playEvent(Event("The flame consumes forests alone"))
+            self.events.setColor(2)
+
         if (self.button2.click_count > self.TREE_COUNT):
-                self.button3.enable()
+            self.button3.enable()
+            self.events.playEvent(Event("The flame draws once carbon life into it"))
+            self.events.setColor(3)
+
         if (self.button3.click_count > self.PEOPLE_COUNT):
-                self.button4.enable()
+            self.button4.enable()
+            self.events.playEvent(Event("The flame grows to consumes homes"))
+            self.events.setColor(4)
+
         if (self.button4.click_count > self.BUILDING_COUNT):
-                self.button5.enable()
+            self.button5.enable()
+            self.events.playEvent(Event("Entire cities collapse under the flame"))
+            self.events.setColor(5)
+
         if (self.button5.click_count > self.CITY_COUNT):
-                self.button6.enable()
+            self.button6.enable()
+            self.events.playEvent(Event("There is nothing left but masses of land"))
+            self.events.setColor(6)
+
         if (self.button6.click_count > self.CONTINENT_COUNT):
-                self.button7.enable()
+            self.button7.enable()
+            self.events.playEvent(Event("The flame pulls planets into its gravity"))
+            self.events.setColor(7)
+
         if (self.button7.click_count > self.PLANET_COUNT):
-                self.button8.enable()
+            self.button8.enable()
+            self.events.playEvent(Event("Once distant galaxies are drawn into the flame"))
+            self.events.setColor(8)
 
         if (self.box in self.mouse.physics.currentCollisions and self.mouse.is_clicking == True):
             self.current_score += 1
@@ -202,7 +232,7 @@ class ButtonController(entityx.Entity):
         self.rend.fontString = "Heat: " + str(self.current_score)
         self.rend.dirty = True
 
-        if (self.button8.click_count == 100):
+        if (self.button8.click_count == 100 and self.event_game_done):
             gameOverBox = entityx.Entity()
             newBody = gameOverBox.Component(Body)
             newBody.position.x = 260
@@ -217,10 +247,11 @@ class ButtonController(entityx.Entity):
             newRenderable = gameOverBox.Component(Renderable)
             newRenderable.font = "./fonts/arial.ttf"
             newRenderable.fontSize = 30
-            newRenderable.fontString = "You Win!\nFollow us on twitter\n@tehPHEN\n@mitchcraig311"
+            newRenderable.fontString = "The flame consumes on in our hearts.\nFollow us on twitter\n@tehPHEN\n@mitchcraig311"
             newRenderable.r = 186
             newRenderable.g = 26
             newRenderable.b = 119
+            self.event_game_done = True
 
             e = entityx.Entity()
             sound = e.Component(Sound)
