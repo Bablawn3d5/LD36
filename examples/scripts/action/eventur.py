@@ -12,15 +12,29 @@ EVENT_TEXTS = [
 # 0->4: Intro, played right away
 "You sit in a dark room with only sticks around you.",
 "This world is void of any life.",
-"There is only you and these sticks...",
+"There is only you, and these sticks...",
 "You put some sticks together to start the flame.",
 "Kindle the flame, it desires to be bigger.",
 
 # 5: After heat level >= 20
 "The flame flickers in the dark.",
 
-# ?: Plays at the end of game
-"You've consumed the entire universe."
+# 6->12: Plays at the end of game
+"The flame consumed the entire universe.",
+"There is nothing left to consume.",
+"The flame not satisfied.. but theres nothing left",
+"...",
+"....",
+"The world is void of any life",
+"...  ",
+# HACK PAD IT OUT WITH WHITESPACES SO IT DOESN"T PRINT SO DAMM SLOW
+"There is only you, in this cold dark room.                   ",
+"...   ",
+"....     ",
+"...       ",
+"There is only you, and these sticks.",
+"You desire to be reunited with that feeling again...",
+"You put some sticks together to start the flame. "
 ]
 
 class Event(object):
@@ -34,7 +48,7 @@ class Event(object):
         self.event_final = 1
         self.event_text = string
         self.is_rendering = True
-        self.sound_player_prog = re.compile("[AEIOUaeiouYyZzHhMmTtfF.]")
+        self.sound_player_prog = re.compile("[AEIOUaeiouYyZzHhMmTtfF.-]")
 
     def play(self,dt):
         if self.is_rendering:

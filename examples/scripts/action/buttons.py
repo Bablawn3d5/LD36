@@ -99,7 +99,10 @@ class ButtonController(entityx.Entity):
         self.PLANET_COUNT = 10
 
         self.time_count = 0
+        self.ending_done = False
+        self.ending_start = 0
         self.events_fired = [False] * 100
+        self.event_game_ending = False
         self.event_game_done = False
 
         self.mouse = MouseFollower()
@@ -118,9 +121,10 @@ class ButtonController(entityx.Entity):
         newBody.position.x = 3 * TILESIZE_X + 5
         newBody.position.y = 8 * TILESIZE_Y + 5
 
-    def fireEvent(self, numbah, length = 3):
+    def fireEvent(self, numbah, length = 3, repeat = False):
         if self.events_fired[numbah] == False:
             e = Event(EVENT_TEXTS[numbah+1])
+            e.repeat = repeat
             e.event_final = length
             self.events.playEvent(e)
             self.events_fired[numbah] = True
@@ -167,14 +171,24 @@ class ButtonController(entityx.Entity):
 
             self.init = True
 
-        self.process_button(self.button1)
-        self.process_button(self.button2)
-        self.process_button(self.button3)
-        self.process_button(self.button4)
-        self.process_button(self.button5)
-        self.process_button(self.button6)
-        self.process_button(self.button7)
-        self.process_button(self.button8)
+        if self.event_game_ending == False:
+            self.process_button(self.button1)
+            self.process_button(self.button2)
+            self.process_button(self.button3)
+            self.process_button(self.button4)
+            self.process_button(self.button5)
+            self.process_button(self.button6)
+            self.process_button(self.button7)
+            self.process_button(self.button8)
+
+            if (self.box in self.mouse.physics.currentCollisions and self.mouse.is_clicking == True):
+                self.current_score += 1
+                # Make a sound on click
+                e = entityx.Entity()
+                e.death = e.Component(Destroyed)
+                e.death.timer = 2
+                sound = e.Component(Sound)
+                sound.name = "sounds/Explode.wav"
 
         # SCALING LOGIC GOES HERE:
         if(self.current_score > 100):
@@ -221,23 +235,70 @@ class ButtonController(entityx.Entity):
             self.events.playEvent(Event("Once distant galaxies are drawn into the flame"))
             self.events.setColor(8)
 
-        if (self.box in self.mouse.physics.currentCollisions and self.mouse.is_clicking == True):
-            self.current_score += 1
-            # Make a sound on click
-            e = entityx.Entity()
-            e.death = e.Component(Destroyed)
-            e.death.timer = 2
-            sound = e.Component(Sound)
-            sound.name = "sounds/Explode.wav"
+        if (self.button8.click_count == 100 and self.event_game_done == False):
+            self.event_game_ending = True
+            self.do_ending(dt)
+            if self.ending_done == True and self.event_game_done == False:
+                self.do_credits()
 
         self.rend.fontString = "Heat: " + str(self.current_score)
         self.rend.dirty = True
 
-        if (self.button8.click_count == 100 and self.event_game_done == False):
+    def do_ending(self, dt):
+        if self.ending_start == 0:
+            self.ending_start = self.time_count
+            self.ending_score = self.current_score
+        heat_loss_time = 45
+        self.current_score = int(self.ending_score - self.ending_score*min( heat_loss_time,self.time_count-self.ending_start)/ heat_loss_time)
+
+
+        self.fireEvent(6, length = 2) # "The flame consumed the entire universe.",
+        if (self.time_count >= self.ending_start+4):
+            self.fireEvent(7, length = 2) # "There is nothing left to consume.",
+        if (self.time_count >= self.ending_start+8):
+# "The flame not satisfied.. but theres nothing left",
+            self.fireEvent(8)
+        if (self.time_count >= self.ending_start+12):
+# "...",
+            self.fireEvent(9, length = 1)
+        if (self.time_count >= self.ending_start+16):
+# "...",
+            self.fireEvent(10, length=5)
+        if (self.time_count >= self.ending_start+21):
+# "The world once is void of any life.",
+            self.fireEvent(11,length=6)
+        if (self.time_count >= self.ending_start+28):
+# "...",
+            self.fireEvent(12,length=1)
+        if (self.time_count >= self.ending_start+30):
+# "There is only you, in this cold dark room.",
+            self.fireEvent(13, length = 8)
+        if (self.time_count >= self.ending_start+42):
+            # "...",
+            self.fireEvent(14, length = 4)
+        if (self.time_count >= self.ending_start+45):
+# "...",
+            self.fireEvent(16)
+        if (self.time_count >= self.ending_start+50):
+# "There is only you, and these sticks.",
+            self.fireEvent(17)
+        if (self.time_count >= self.ending_start+54):
+# "You desire to be reunited with that feeling again...",
+            self.fireEvent(18)
+        if (self.time_count >= self.ending_start+58):
+# "You put some sticks together to start the flame."
+            self.fireEvent(19)
+        if (self.time_count >= self.ending_start+74):
+            self.ending_done = True
+
+
+
+    def do_credits(self):
+            self.event_game_done = True
             gameOverBox = entityx.Entity()
             newBody = gameOverBox.Component(Body)
             newBody.position.x = 260
-            newBody.position.y = 250
+            newBody.position.y = 180
             gameOverBox.Component(Stats)
             newPhysics = gameOverBox.Component(Physics)
             newPhysics.bodyType = b2BodyType.STATIC
@@ -248,11 +309,14 @@ class ButtonController(entityx.Entity):
             newRenderable = gameOverBox.Component(Renderable)
             newRenderable.font = "./fonts/arial.ttf"
             newRenderable.fontSize = 30
-            newRenderable.fontString = "The flame consumes on in our hearts.\nFollow us on twitter\n@tehPHEN\n@mitchcraig311"
-            newRenderable.r = 186
-            newRenderable.g = 26
-            newRenderable.b = 119
-            self.event_game_done = True
+            newRenderable.fontString ="""The flame continues in our hearts.
+      Thank you for playing!
+      Follow us on twitter
+      @tehPHEN
+      @mitchcraig311"""
+            newRenderable.r = 255
+            newRenderable.g = 244
+            newRenderable.b = 255
 
             e = entityx.Entity()
             sound = e.Component(Sound)
