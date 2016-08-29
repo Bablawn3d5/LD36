@@ -24,7 +24,7 @@ EVENT_TEXTS = [
 "There is nothing left to consume.",
 "The flame slowly dies, as the last few items burn.",
 "...",
-"....",
+"....       ",
 # HACK PAD IT OUT WITH WHITESPACES SO IT DOESN"T PRINT SO DAMM SLOW
 "The world is void of any life.                          ",
 "...  ",
