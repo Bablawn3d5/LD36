@@ -145,11 +145,11 @@ class EventController(entityx.Entity):
             event_line3 = self.events[2].play(dt)
         self.rend.fontString = "%s\n%s\n%s\n" % (event_line1, event_line2,event_line3)
         if self.rainbow_text:
-            self.dt += min(0.015,dt)
+            self.dt += min(0.00055,dt)
             cur = self.dt * math.pi
-            self.rend.r = int(abs(255 * math.sin(cur)) + 20)
-            self.rend.g = int(abs(255 * math.cos(cur)))
-            self.rend.b = int(abs(255 * (math.sin(cur/2) * math.cos(cur/2))))
+            self.rend.r = max( 20, int(abs(255 * math.sin(cur)) + 20) )
+            self.rend.g = max( 0, int(abs(255 * (math.sin(cur/2)))) )
+            self.rend.b = max( 5, int(abs(255 * math.cos(cur)) + 20) )
 
         self.rend.dirty = True
 
