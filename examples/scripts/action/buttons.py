@@ -197,7 +197,7 @@ class ButtonController(entityx.Entity):
         # Time lock the first unlock
         if(self.current_score > 100 and self.time_count >= 16):
             self.button1.enable()
-            self.events.playEvent(Event("The flame draws sticks on its own"))
+            self.events.playEvent(Event("The flame begins to draws sticks on its own"))
             self.events.setColor(1)
 
         if (self.button1.click_count > self.STICK_COUNT):
