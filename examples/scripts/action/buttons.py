@@ -117,6 +117,8 @@ class ButtonController(entityx.Entity):
         self.button7 = self.createButton(TILESIZE_X*0,TILESIZE_Y*8, "Planets", 11, 7, 7, False)
         self.button8 = self.createButton(TILESIZE_X*0,TILESIZE_Y*9, "Galaxies", 12, 8, 8, False)
 
+        self.flushed = False
+
         self.events = EventController()
         newBody = self.events.Component(Body)
         newBody.position.x = 3 * TILESIZE_X + 5
@@ -205,7 +207,7 @@ class ButtonController(entityx.Entity):
             self.fireEvent(5, length=1.5)
 
         # Time lock the first unlock
-        if(self.current_score > 100 and self.time_count >= 16):
+        if(self.current_score > 100 and self.time_count >= 19):
             self.button1.enable()
             self.events.playEvent(Event("The flame begins to draws sticks on its own"))
             self.events.setColor(1)
@@ -242,6 +244,9 @@ class ButtonController(entityx.Entity):
 
         if (self.button7.click_count > self.PLANET_COUNT):
             self.button8.enable()
+            if not self.flushed:
+                self.events.flushEvents()
+                self.flushed = True
             self.events.playEvent(Event("Once distant galaxies are drawn into the flame"))
             self.events.setColor(8)
 
@@ -261,7 +266,7 @@ class ButtonController(entityx.Entity):
         heat_loss_time = 45
         self.current_score = int(self.ending_score - self.ending_score*min( heat_loss_time,self.time_count-self.ending_start)/ heat_loss_time)
 
-
+        self.events.setColor(1)
         self.fireEvent(6, length = 2) # "The flame consumed the entire universe.",
         if (self.time_count >= self.ending_start+4):
             self.fireEvent(7, length = 2) # "There is nothing left to consume.",
