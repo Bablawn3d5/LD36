@@ -25,9 +25,9 @@ EVENT_TEXTS = [
 "The flame not satisfied.. but theres nothing left",
 "...",
 "....",
-"The world is void of any life",
-"...  ",
 # HACK PAD IT OUT WITH WHITESPACES SO IT DOESN"T PRINT SO DAMM SLOW
+"The world is void of any life.                                 ",
+"...  ",
 "There is only you, in this cold dark room.                   ",
 "...   ",
 "....     ",
