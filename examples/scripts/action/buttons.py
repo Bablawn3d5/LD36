@@ -6,6 +6,7 @@ from gamemath import vector2
 from follower import Orbital
 from spawner import MagicSpawner
 from eventur import EventController, Event, EVENT_TEXTS
+from fire import Flicker
 
 Vector2 = vector2.Vector2
 TILESIZE_X = 80
@@ -143,6 +144,15 @@ class ButtonController(entityx.Entity):
             self.fireEvent(4)
 
         if (self.init == False):
+            self.light = Flicker()
+            rend = self.light.Component(Renderable)
+            body = self.light.Component(Body)
+            body.position.x = 440
+            body.position.y = 130
+            self.light.center = Vector2(body.position.x + self.light.size.x/2,
+            body.position.y + self.light.size.y/2)
+            rend.texture = "./images/Light.png"
+
             self.box = entityx.Entity()
             newBody = self.box.Component(Body)
             newBody.position.x = 480
@@ -272,6 +282,9 @@ class ButtonController(entityx.Entity):
             self.fireEvent(12,length=1)
         if (self.time_count >= self.ending_start+31):
 # "There is only you, in this cold dark room.",
+            if self.light != None:
+                self.light.Component(Destroyed)
+                self.light = None
             self.fireEvent(13, length = 8)
         if (self.time_count >= self.ending_start+43):
             # "...",
@@ -288,7 +301,7 @@ class ButtonController(entityx.Entity):
         if (self.time_count >= self.ending_start+58):
 # "You put some sticks together to start the flame."
             self.fireEvent(19)
-        if (self.time_count >= self.ending_start+66):
+        if (self.time_count >= self.ending_start+64):
             self.ending_done = True
 
 
