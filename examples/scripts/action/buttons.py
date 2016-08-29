@@ -214,7 +214,7 @@ class ButtonController(entityx.Entity):
 
         if (self.button1.click_count > self.STICK_COUNT):
             self.button2.enable()
-            self.events.playEvent(Event("The flame consumes forests alone"))
+            self.events.playEvent(Event("The flame consumes forests with ease.        "))
             self.events.setColor(2)
 
         if (self.button2.click_count > self.TREE_COUNT):
@@ -249,6 +249,38 @@ class ButtonController(entityx.Entity):
                 self.flushed = True
             self.events.playEvent(Event("Once distant galaxies are drawn into the flame"))
             self.events.setColor(8)
+
+        if (self.button8.click_count >= 10):
+            self.events.playEvent(Event("The flame grows as it devours it new neighbors."))
+            self.button8.timer = 2
+
+        if (self.button8.click_count >= 30):
+            self.events.playEvent(Event("Expanding faster as each galaxy joins the flame."))
+            self.button8.timer = 0.5
+
+        if (self.button8.click_count >= 40):
+            self.events.playEvent(Event("Little can the universe do to stop the flame now."))
+            self.button8.timer = 0.25
+
+        if (self.button8.click_count >= 50):
+            self.events.playEvent(Event("The flame continues to grow to pull more galaxies."))
+            self.button8.timer = 0.175
+
+        if (self.button8.click_count >= 60):
+            self.events.playEvent(Event("You are filled with a feeling of delight."))
+            self.button8.timer = 0.1
+
+        if (self.button8.click_count >= 70):
+            self.events.playEvent(Event("You've reach euphoria, the flame expands rapidly"))
+
+        if (self.button8.click_count >= 80):
+            self.events.playEvent(Event("Is this what you were waiting for?"))
+
+        if (self.button8.click_count >= 90):
+            self.events.playEvent(Event("There isn't many galaxies left outside of the flame."))
+
+        if (self.button8.click_count >= 95):
+            self.events.playEvent(Event("                        "))
 
         if (self.button8.click_count == 100 and self.event_game_done == False):
             self.event_game_ending = True
