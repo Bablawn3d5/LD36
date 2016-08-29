@@ -104,6 +104,20 @@ class ButtonController(entityx.Entity):
 
         self.mouse = MouseFollower()
 
+        self.button1 = self.createButton(TILESIZE_X*0,TILESIZE_Y*2, "Sticks", 0, 1, 1, False)
+        self.button2 = self.createButton(TILESIZE_X*0,TILESIZE_Y*3, "Trees", 6, 2, 2, False)
+        self.button3 = self.createButton(TILESIZE_X*0,TILESIZE_Y*4, "People", 7, 3, 3, False)
+        self.button4 = self.createButton(TILESIZE_X*0,TILESIZE_Y*5, "Buildings", 8, 4, 4, False)
+        self.button5 = self.createButton(TILESIZE_X*0,TILESIZE_Y*6, "Cities", 9, 5, 5, False)
+        self.button6 = self.createButton(TILESIZE_X*0,TILESIZE_Y*7, "Continent", 10, 6, 6, False)
+        self.button7 = self.createButton(TILESIZE_X*0,TILESIZE_Y*8, "Planets", 11, 7, 7, False)
+        self.button8 = self.createButton(TILESIZE_X*0,TILESIZE_Y*9, "Galaxies", 12, 8, 8, False)
+
+        self.events = EventController()
+        newBody = self.events.Component(Body)
+        newBody.position.x = 3 * TILESIZE_X + 5
+        newBody.position.y = 8 * TILESIZE_Y + 5
+
     def fireEvent(self, numbah, length = 3):
         if self.events_fired[numbah] == False:
             e = Event(EVENT_TEXTS[numbah+1])
@@ -114,6 +128,7 @@ class ButtonController(entityx.Entity):
     def update(self, dt):
         self.time_count  += dt
         # FIRE OFF THE INTRODUCTION.
+        self.fireEvent(0)
         if (self.time_count >= 4):
             self.fireEvent(1)
         if (self.time_count >= 8):
@@ -124,21 +139,6 @@ class ButtonController(entityx.Entity):
             self.fireEvent(4)
 
         if (self.init == False):
-            self.button1 = self.createButton(TILESIZE_X*0,TILESIZE_Y*2, "Sticks", 0, 1, 1, False)
-            self.button2 = self.createButton(TILESIZE_X*0,TILESIZE_Y*3, "Trees", 6, 2, 2, False)
-            self.button3 = self.createButton(TILESIZE_X*0,TILESIZE_Y*4, "People", 7, 3, 3, False)
-            self.button4 = self.createButton(TILESIZE_X*0,TILESIZE_Y*5, "Buildings", 8, 4, 4, False)
-            self.button5 = self.createButton(TILESIZE_X*0,TILESIZE_Y*6, "Cities", 9, 5, 5, False)
-            self.button6 = self.createButton(TILESIZE_X*0,TILESIZE_Y*7, "Continent", 10, 6, 6, False)
-            self.button7 = self.createButton(TILESIZE_X*0,TILESIZE_Y*8, "Planets", 11, 7, 7, False)
-            self.button8 = self.createButton(TILESIZE_X*0,TILESIZE_Y*9, "Galaxies", 12, 8, 8, False)
-
-            self.events = EventController()
-            newBody = self.events.Component(Body)
-            newBody.position.x = 3 * TILESIZE_X + 5
-            newBody.position.y = 8 * TILESIZE_Y + 5
-            self.fireEvent(0)
-
             self.box = entityx.Entity()
             newBody = self.box.Component(Body)
             newBody.position.x = 480
@@ -232,7 +232,7 @@ class ButtonController(entityx.Entity):
         self.rend.fontString = "Heat: " + str(self.current_score)
         self.rend.dirty = True
 
-        if (self.button8.click_count == 100 and self.event_game_done):
+        if (self.button8.click_count == 100 and self.event_game_done == False):
             gameOverBox = entityx.Entity()
             newBody = gameOverBox.Component(Body)
             newBody.position.x = 260
