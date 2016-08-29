@@ -177,10 +177,11 @@ class ButtonController(entityx.Entity):
         self.process_button(self.button8)
 
         # SCALING LOGIC GOES HERE:
-        if(self.current_score > 50):
+        if(self.current_score > 100):
             self.fireEvent(5, length=1.5)
 
-        if(self.current_score > 100):
+        # Time lock the first unlock
+        if(self.current_score > 150 and self.time_count >= 16):
             self.button1.enable()
             self.events.playEvent(Event("The flame draws sticks on its own"))
             self.events.setColor(1)

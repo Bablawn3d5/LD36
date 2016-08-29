@@ -19,6 +19,7 @@ EVENT_TEXTS = [
 # 5: After heat level >= 20
 "The flame flickers in the dark.",
 
+# ?: Plays at the end of game
 "You've consumed the entire universe."
 ]
 
