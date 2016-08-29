@@ -13,9 +13,8 @@ EVENT_TEXTS = [
 "This world is void of any life.",
 "There is only you and these sticks...",
 "You put some sticks together to start the flame.",
-"Kindle the flame, it  desires to be bigger.",
+"Kindle the flame, it desires to be bigger.",
 "The flame flickers in the dark.",
-"A few more sticks, then maybe something bigger?",
 "You've consumed the entire universe."
 ]
 

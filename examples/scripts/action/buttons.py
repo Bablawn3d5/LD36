@@ -103,20 +103,24 @@ class ButtonController(entityx.Entity):
 
         self.mouse = MouseFollower()
 
+    def fireEvent(self, numbah, length = 4):
+        if self.events_fired[numbah] == False:
+            e = Event(EVENT_TEXTS[numbah+1])
+            e.event_final = length
+            self.events.playEvent(e)
+            self.events_fired[numbah] = True
+
     def update(self, dt):
         self.time_count  += dt
-        if (self.time_count >= 3 and self.events_fired[0] == False):
-            self.events.playEvent(Event(EVENT_TEXTS[2]))
-            self.events_fired[0] = True
-        if (self.time_count >= 6 and self.events_fired[1] == False):
-            self.events.playEvent(Event(EVENT_TEXTS[3]))
-            self.events_fired[1] = True
-        if (self.time_count >= 9 and self.events_fired[2] == False):
-            self.events.playEvent(Event(EVENT_TEXTS[4]))
-            self.events_fired[2] = True
-        if (self.time_count >= 12 and self.events_fired[3] == False):
-            self.events.playEvent(Event(EVENT_TEXTS[5]))
-            self.events_fired[3] = True
+        # FIRE OFF THE INTRODUCTION.
+        if (self.time_count >= 4):
+            self.fireEvent(1)
+        if (self.time_count >= 8):
+            self.fireEvent(2)
+        if (self.time_count >= 12):
+            self.fireEvent(3)
+        if (self.time_count >= 16):
+            self.fireEvent(4)
 
         if (self.init == False):
             self.button1 = self.createButton(TILESIZE_X*0,TILESIZE_Y*2, "Sticks", 0, 1, 1, True)
@@ -132,7 +136,7 @@ class ButtonController(entityx.Entity):
             newBody = self.events.Component(Body)
             newBody.position.x = 3 * TILESIZE_X + 5
             newBody.position.y = 8 * TILESIZE_Y + 5
-            self.events.playEvent(Event(EVENT_TEXTS[1]))
+            self.playEvent(0)
 
             self.box = entityx.Entity()
             newBody = self.box.Component(Body)
